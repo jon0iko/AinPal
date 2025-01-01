@@ -32,14 +32,12 @@ export default function RootLayout() {
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
-      <Stack.Screen name="(root)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Screen name="onboarding" options={{ headerShown: false }} />
       
-      {/* Add Bare Acts, Terms, and Bookmarks screens */}
-      <Stack.Screen name="(tabs)/bareActs" options={{ title: 'Bare Acts' }} />
-      <Stack.Screen name="(tabs)/constitution" options={{ title: 'Terms' }} />
-      <Stack.Screen name="(tabs)/bookmarks" options={{ title: 'Bookmarks' }} />
-      <Stack.Screen name="(tabs)/chatbot" options={{ title: 'LawBot' }} />
+      {/* Root Stack for Tab Navigation */}
+      <Stack.Screen name="(root)" options={{ headerShown: false }} />
+
+      {/* +not-found for Unrecognized Routes */}
       <Stack.Screen name="+not-found" />
     </Stack>
   );
