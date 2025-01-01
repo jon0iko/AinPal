@@ -2,6 +2,7 @@ import { Tabs } from 'expo-router';
 import { View, TouchableOpacity, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useNavigation } from 'expo-router';
+import { router } from "expo-router";
 
 export default function TabsLayout() {
   const navigation = useNavigation();
@@ -14,73 +15,77 @@ export default function TabsLayout() {
           tabBarStyle: styles.tabBar,
         }}
       >
-        <Tabs.Screen 
-          name="home"  
-          options={{ 
+        <Tabs.Screen
+          name="home"
+          options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons 
-                name="home-outline" 
-                size={24} 
-                color={focused ? '#007AFF' : '#7f8c8d'} 
+              <Ionicons
+                name="home-outline"
+                size={24}
+                color={focused ? "#007AFF" : "#7f8c8d"}
               />
             ),
           }}
         />
 
-        <Tabs.Screen 
-          name="constitution"  
-          options={{ 
+        <Tabs.Screen
+          name="constitution"
+          options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons 
-                name="book-outline" 
-                size={24} 
-                color={focused ? '#007AFF' : '#7f8c8d'} 
+              <Ionicons
+                name="book-outline"
+                size={24}
+                color={focused ? "#007AFF" : "#7f8c8d"}
               />
             ),
           }}
         />
 
         {/* Floating Chatbot Button */}
-        <Tabs.Screen 
-          name="chatbot" 
+        <Tabs.Screen
+          name="chatbot"
           options={{
             headerShown: false,
             tabBarButton: () => (
-              <TouchableOpacity 
+              <TouchableOpacity
                 style={styles.chatbotButton}
-                onPress={() => navigation.navigate('chatbot')}
+                onPress={() => router.push("/chatbot")}
               >
-                <Ionicons name="chatbubble-ellipses-outline" size={26} color="#fff" />
+                <Ionicons
+                  name="chatbubble-ellipses-outline"
+                  size={26}
+                  color="#fff"
+                />
               </TouchableOpacity>
             ),
           }}
         />
 
-        <Tabs.Screen 
-          name="bareActs"  
-          options={{ 
+        <Tabs.Screen
+          name="bareActs"
+          options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons 
-                name="document-text-outline" 
-                size={24} 
-                color={focused ? '#007AFF' : '#7f8c8d'} 
+              <Ionicons
+                name="document-text-outline"
+                size={24}
+                color={focused ? "#007AFF" : "#7f8c8d"}
               />
             ),
           }}
         />
 
-        <Tabs.Screen 
-          name="bookmarks"  
-          options={{ 
+        <Tabs.Screen
+          name="bookmarks"
+          options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons 
-                name="bookmark-outline" 
-                size={24} 
-                color={focused ? '#007AFF' : '#7f8c8d'} 
+              <Ionicons
+                name="bookmark-outline"
+                size={24}
+                color={focused ? "#007AFF" : "#7f8c8d"}
               />
             ),
           }}
