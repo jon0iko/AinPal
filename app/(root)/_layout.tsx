@@ -6,7 +6,21 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 export default function DrawerLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <Drawer drawerContent ={CustomDrawerContent}>
+      <Drawer
+        drawerContent={CustomDrawerContent}
+        screenOptions={{
+          drawerActiveBackgroundColor: "#5363df",
+          drawerHideStatusBarOnOpen: true,
+          drawerActiveTintColor: "#fff",
+          drawerLabelStyle: {
+            marginLeft: -8, // Adjust to control text position
+            fontSize: 14, // Optional: Adjust text size
+          },
+          drawerItemStyle: {
+            marginVertical: 5, // Add space between items
+          },
+        }}
+      >
         {/* Home Screen */}
         <Drawer.Screen
           name="(tabs)"
