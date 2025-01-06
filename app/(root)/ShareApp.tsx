@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 
-function Profile() {
+function ShareApp() {
   return <Text> Hello Profile</Text>;
 }
 
-export default Profile;
+export default ShareApp;
