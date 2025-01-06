@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <ScrollView className="flex-1 bg-gray-100">
       <View className="p-5 bg-[#34495e] items-center">
-        <Text className="text-2xl text-white mb-6">Home</Text>
+        
 
         {/* Row for Horizontal Buttons */}
         <View className="flex-row justify-between mt-2 w-full">
