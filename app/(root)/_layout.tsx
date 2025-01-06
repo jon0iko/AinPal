@@ -82,5 +82,6 @@ export default function DrawerLayout() {
         />
       </Drawer>
     </GestureHandlerRootView>
+    
   );
 }
