@@ -8,7 +8,7 @@ export default function Home() {
 
   return (
     <ScrollView className="flex-1 bg-gray-100">
-      <View className="p-5 bg-[#34495e] items-center">
+      <View className="p-5 bg-primary-800 items-center">
         
 
         {/* Row for Horizontal Buttons */}

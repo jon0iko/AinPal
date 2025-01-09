@@ -50,7 +50,7 @@ export default function CustomDrawerContent(props: any) {
           paddingBottom: 20 + bottom,
         }}
       >
-        <Text> Footer</Text>
+        
       </View>
     </View>
   );

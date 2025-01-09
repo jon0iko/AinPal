@@ -19,7 +19,7 @@ export default function Index() {
             console.log("Onboarding Status:", onboarded);  // Debugging line
             if (onboarded === 'true') {
                 console.log("Navigating to home...");
-                router.replace('/(drawer)/(root)/(tabs)/home');  // Navigate to home if onboarding complete
+                router.replace('/(root)/(tabs)/home');  // Navigate to home if onboarding complete
             } else {
                 console.log("Redirecting to Onboarding...");
                 router.replace('/onboarding');  // Show onboarding if not completed
