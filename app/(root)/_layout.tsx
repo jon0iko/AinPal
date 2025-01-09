@@ -68,18 +68,6 @@ export default function DrawerLayout() {
             ),
           }}
         />
-
-        {/* Share App Screen */}
-        <Drawer.Screen
-          name="ShareApp"
-          options={{
-            drawerLabel: "Share app",
-            headerTitle: "Share app",
-            drawerIcon: ({ size, color }) => (
-              <Ionicons name="share-social-outline" size={size} color={color} />
-            ),
-          }}
-        />
       </Drawer>
     </GestureHandlerRootView>
     
