@@ -1,5 +1,6 @@
-import { View, TextInput, Text, StyleSheet, FlatList } from 'react-native';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useState } from 'react';
+import SearchLaws from '@/components/SearchLaws';
 
 export default function BareActsScreen() {
   const [acts] = useState([
@@ -7,7 +8,8 @@ export default function BareActsScreen() {
     { id: '2', title: 'The Dowry Prohibition Act 1980:' }
     
   ]);
-  const [search, setSearch] = useState('');
+  
+  const [search, setSearch] = useState("");
 
   const filteredActs = acts.filter(act =>
     act.title.toLowerCase().includes(search.toLowerCase())
@@ -15,12 +17,9 @@ export default function BareActsScreen() {
 
   return (
     <View style={styles.container}>
-      <TextInput 
-        style={styles.searchBar} 
-        placeholder="Search Bare Acts" 
-        onChangeText={setSearch}
-      />
-      <FlatList 
+      {/* SearchLaws component has the prop search from child */}
+      <SearchLaws search={search} setSearch={setSearch} />
+      <FlatList
         data={filteredActs}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
@@ -35,6 +34,5 @@ export default function BareActsScreen() {
 
 const styles = StyleSheet.create({
   container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  searchBar: { backgroundColor: '#ecf0f1', padding: 10, borderRadius: 8, marginBottom: 20 },
   listItem: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ddd' },
 });

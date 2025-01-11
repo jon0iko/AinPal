@@ -1,12 +1,9 @@
 import { Tabs } from "expo-router";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useNavigation } from "expo-router";
 import { router } from "expo-router";
 
 export default function TabsLayout() {
-  const navigation = useNavigation();
-
   return (
     <View style={styles.container}>
       <Tabs
@@ -108,7 +105,7 @@ const styles = StyleSheet.create({
   chatbotButton: {
     position: "absolute",
     top: -20,
-    backgroundColor: "#007AFF",
+    backgroundColor: "#1A4B8C",
     borderRadius: 30,
     width: 60,
     height: 60,
