@@ -1,12 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { FlatList, ActivityIndicator, StyleSheet, View } from "react-native";
+import {
+  FlatList,
+  ActivityIndicator,
+  StyleSheet,
+  View,
+  Text,
+} from "react-native";
 import LawItem from "./LawItem";
 import { fetchLaws } from "../api/laws";
 
 interface Law {
   id: string;
   title: string;
-  date: string;
+  subtitle: string;
+  publicationDate: string;
 }
 
 interface LawListProps {
@@ -20,16 +27,35 @@ const LawList: React.FC<LawListProps> = ({ search }) => {
 
   const loadLaws = async () => {
     setLoading(true);
-    const fetchedLaws = await fetchLaws(search, page); // API call
-    setLaws((prevLaws) => [...prevLaws, ...fetchedLaws]);
-    setLoading(false);
+    try {
+      const fetchedLaws = await fetchLaws(search, page); // API call
+      const mappedLaws = fetchedLaws.map((law: any) => ({
+        id: `${law.lawId.low}`, // Convert lawId to a usable string
+        title: law.title,
+        subtitle: law.subtitle,
+        publicationDate: law.publicationDate,
+      }));
+      setLaws((prevLaws) => [...prevLaws, ...mappedLaws]); // Append new laws to the existing list
+    } catch (error) {
+      console.error("Error loading laws:", error);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  // Fetch laws whenever the page or search changes
+  useEffect(() => {
+    setLaws([]); // Clear laws when search term changes
+    setPage(1); // Reset to the first page
+  }, [search]);
 
   useEffect(() => {
     loadLaws();
   }, [page, search]);
 
-  const handleLoadMore = () => setPage((prev) => prev + 1);
+  const handleLoadMore = () => {
+    if (!loading) setPage((prev) => prev + 1); // Increment page for infinite scroll
+  };
 
   return (
     <FlatList
@@ -38,9 +64,30 @@ const LawList: React.FC<LawListProps> = ({ search }) => {
       renderItem={({ item }) => <LawItem law={item} />}
       onEndReached={handleLoadMore}
       onEndReachedThreshold={0.5}
-      ListFooterComponent={loading ? <ActivityIndicator /> : null}
+      ListFooterComponent={
+        loading ? (
+          <View style={styles.loader}>
+            <ActivityIndicator size="small" />
+          </View>
+        ) : null
+      }
+      ListEmptyComponent={
+        !loading ? <Text style={styles.emptyText}>No laws found</Text> : null
+      }
     />
   );
 };
+
+const styles = StyleSheet.create({
+  loader: {
+    padding: 10,
+  },
+  emptyText: {
+    textAlign: "center",
+    marginVertical: 20,
+    fontSize: 16,
+    color: "#666",
+  },
+});
 
 export default LawList;

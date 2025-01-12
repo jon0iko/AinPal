@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, FlatList } from 'react-native';
 import { useState } from 'react';
 import SearchLaws from '@/components/SearchLaws';
+import LawList from '@/components/LawList';
 
 export default function BareActsScreen() {
   const [acts] = useState([
@@ -19,15 +20,7 @@ export default function BareActsScreen() {
     <View style={styles.container}>
       {/* SearchLaws component has the prop search from child */}
       <SearchLaws search={search} setSearch={setSearch} />
-      <FlatList
-        data={filteredActs}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.listItem}>
-            <Text>{item.title}</Text>
-          </View>
-        )}
-      />
+      <LawList search={search} />
     </View>
   );
 }

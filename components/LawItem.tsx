@@ -6,7 +6,8 @@ interface LawItemProps {
   law: {
     id: string;
     title: string;
-    date: string;
+    subtitle: string;
+    publicationDate: string;
   };
 }
 
@@ -14,21 +15,38 @@ const LawItem: React.FC<LawItemProps> = ({ law }) => {
   const navigation = useNavigation();
 
   const handlePress = () => {
+    // Navigate to the "lawDetail" screen with the law's ID as a parameter
     // navigation.navigate("lawDetail", { lawId: law.id });
   };
 
   return (
     <TouchableOpacity style={styles.item} onPress={handlePress}>
       <Text style={styles.title}>{law.title}</Text>
-      <Text style={styles.date}>{law.date}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  item: { padding: 10, borderBottomWidth: 1, borderBottomColor: "#ccc" },
-  title: { fontSize: 16, fontWeight: "bold" },
-  date: { fontSize: 12, color: "#666" },
+  item: {
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: "#ccc",
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "bold",
+    color: "#000",
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#555",
+    marginTop: 4,
+  },
+  date: {
+    fontSize: 12,
+    color: "#888",
+    marginTop: 4,
+  },
 });
 
 export default LawItem;
