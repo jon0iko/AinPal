@@ -81,12 +81,14 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     marginBottom: 30,
   },
+  // add drop shadow to the button
   startButton: {
     borderRadius: 30,
     paddingVertical: 14,
     paddingHorizontal: 40,
     justifyContent: "center",
     alignItems: "center",
+    shadowColor: "#000",
   },
   startButtonText: {
     color: "#fff",
