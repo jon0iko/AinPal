@@ -12,30 +12,38 @@ export default function TabsLayout() {
           tabBarStyle: styles.tabBar,
         }}
       >
+        {/* Home Tab */}
         <Tabs.Screen
           name="home"
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="home-outline"
-                size={24}
-                color={focused ? "#007AFF" : "#7f8c8d"}
-              />
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="home-outline"
+                  size={24}
+                  color={focused ? "#007AFF" : "#7f8c8d"}
+                />
+                {focused && <View style={styles.dot} />}
+              </View>
             ),
           }}
         />
 
+        {/* Constitution Tab */}
         <Tabs.Screen
           name="constitution"
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="book-outline"
-                size={24}
-                color={focused ? "#007AFF" : "#7f8c8d"}
-              />
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="book-outline"
+                  size={24}
+                  color={focused ? "#007AFF" : "#7f8c8d"}
+                />
+                {focused && <View style={styles.dot} />}
+              </View>
             ),
           }}
         />
@@ -60,30 +68,38 @@ export default function TabsLayout() {
           }}
         />
 
+        {/* Bare Acts Tab */}
         <Tabs.Screen
           name="bareActs"
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="document-text-outline"
-                size={24}
-                color={focused ? "#007AFF" : "#7f8c8d"}
-              />
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="document-text-outline"
+                  size={24}
+                  color={focused ? "#007AFF" : "#7f8c8d"}
+                />
+                {focused && <View style={styles.dot} />}
+              </View>
             ),
           }}
         />
 
+        {/* Bookmarks Tab */}
         <Tabs.Screen
           name="bookmarks"
           options={{
             headerShown: false,
             tabBarIcon: ({ focused }) => (
-              <Ionicons
-                name="bookmark-outline"
-                size={24}
-                color={focused ? "#007AFF" : "#7f8c8d"}
-              />
+              <View style={styles.iconContainer}>
+                <Ionicons
+                  name="bookmark-outline"
+                  size={24}
+                  color={focused ? "#007AFF" : "#7f8c8d"}
+                />
+                {focused && <View style={styles.dot} />}
+              </View>
             ),
           }}
         />
@@ -101,6 +117,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderTopWidth: 1,
     borderTopColor: "#ddd",
+  },
+  iconContainer: {
+    alignItems: "center",
+  },
+  dot: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: "#007AFF",
+    marginTop: 4,
   },
   chatbotButton: {
     position: "absolute",
