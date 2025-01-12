@@ -28,14 +28,14 @@ const LawItem: React.FC<LawItemProps> = ({ law }) => {
 
 const styles = StyleSheet.create({
   item: {
-    padding: 10,
+    padding: 20,
     borderBottomWidth: 1,
     borderBottomColor: "#ccc",
   },
   title: {
     fontSize: 16,
-    fontWeight: "bold",
-    color: "#000",
+    // fontWeight: "bold",
+    color: "#121212",
   },
   subtitle: {
     fontSize: 14,
