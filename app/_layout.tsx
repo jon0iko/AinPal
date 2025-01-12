@@ -34,8 +34,7 @@ export default function RootLayout() {
       <Stack.Screen name="index" options={{ headerShown: false }} />
       <Stack.Screen name="onboarding" options={{ headerShown: false }} />
       <Stack.Screen name="(root)" options={{ headerShown: false }} />
-      <Stack.Screen name="(screens)/ChatPage" options={{ headerShown: false }} />
-      <Stack.Screen name="(screens)/LawDetailScreen" options={{ headerShown: false }} />
+      <Stack.Screen name="(screens)" options={{ headerShown: false }} />
 
       {/* +not-found for Unrecognized Routes */}
       <Stack.Screen name="+not-found" />

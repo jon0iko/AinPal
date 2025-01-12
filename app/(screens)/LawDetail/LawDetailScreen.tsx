@@ -1,8 +1,7 @@
 import React from "react";
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
-import SectionsTab from "./SectionsTab";
-import LawInformationTab from "./LawInformationTab";
-import { StyleSheet } from "react-native";
+import SectionsTab from "./(tabs)/SectionsTab";
+import LawInformationTab from "./(tabs)/LawInformationTab";
 
 const Tab = createMaterialTopTabNavigator();
 
