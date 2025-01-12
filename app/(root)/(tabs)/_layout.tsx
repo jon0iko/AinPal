@@ -128,19 +128,22 @@ const styles = StyleSheet.create({
     backgroundColor: "#007AFF",
     marginTop: 4,
   },
-  chatbotButton: {
-    position: "absolute",
-    top: -20,
-    backgroundColor: "#1A4B8C",
-    borderRadius: 30,
-    width: 60,
-    height: 60,
-    justifyContent: "center",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
+ chatbotButton: {
+  position: "absolute",
+  bottom: 30, // Adjust as needed to make it float above the tab bar
+  left: "50%", // Center horizontally
+  transform: [{ translateX: -30 }], // Shift left by half the button's width (e.g., 60px wide)
+  backgroundColor: "#1A4B8C",
+  borderRadius: 30,
+  width: 60,
+  height: 60,
+  justifyContent: "center",
+  alignItems: "center",
+  shadowColor: "#000",
+  shadowOffset: { width: 0, height: 4 },
+  shadowOpacity: 0.2,
+  shadowRadius: 4,
+  elevation: 5,
+},
+
 });
