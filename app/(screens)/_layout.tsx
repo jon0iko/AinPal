@@ -4,7 +4,7 @@ import { Stack } from 'expo-router'
 const _layout = () => {
   return (
     <Stack>
-        <Stack.Screen name="ChatPage"  />
+        <Stack.Screen name="ChatPage" options={{ headerShown: false }} />
         <Stack.Screen name="LawDetail/LawDetailScreen"  />
     </Stack>
   )
