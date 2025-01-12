@@ -15,6 +15,5 @@ export default function BareActsScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, backgroundColor: '#fff' },
-  listItem: { padding: 16, borderBottomWidth: 1, borderBottomColor: '#ddd' },
+  container: { flex: 1, padding: 16, backgroundColor: "#EBF2FA" },
 });

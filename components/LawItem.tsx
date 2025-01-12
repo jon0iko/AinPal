@@ -1,7 +1,6 @@
 import React from "react";
 import { Text, TouchableOpacity, StyleSheet } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-
+import { useRouter } from "expo-router";
 interface LawItemProps {
   law: {
     id: string;
@@ -12,11 +11,13 @@ interface LawItemProps {
 }
 
 const LawItem: React.FC<LawItemProps> = ({ law }) => {
-  const navigation = useNavigation();
+  const router = useRouter();
+  
 
   const handlePress = () => {
     // Navigate to the "lawDetail" screen with the law's ID as a parameter
     // navigation.navigate("lawDetail", { lawId: law.id });
+    router.push("/(screens)/LawDetail/LawDetailScreen");
   };
 
   return (
