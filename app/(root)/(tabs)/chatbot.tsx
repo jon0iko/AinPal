@@ -30,7 +30,7 @@ export default function Chatbot() {
       </Text>
 
       {/* Gradient Start Chatting Button */}
-      <TouchableOpacity onPress={() => router.push("/(tabs)/chatpage")}>
+      <TouchableOpacity onPress={() => router.push("/(screens)/ChatPage")}>
         <LinearGradient
           colors={["#003f7d", "#00509e"]}
           start={{ x: 0, y: 0 }}
