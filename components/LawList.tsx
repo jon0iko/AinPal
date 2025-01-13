@@ -12,8 +12,7 @@ import { fetchLaws } from "../api/laws";
 interface Law {
   id: string;
   title: string;
-  subtitle: string;
-  publicationDate: string;
+  hasChapters: string;
 }
 
 interface LawListProps {
@@ -32,8 +31,7 @@ const LawList: React.FC<LawListProps> = ({ search }) => {
       const mappedLaws = fetchedLaws.map((law: any) => ({
         id: `${law.lawId.low}`, // Convert lawId to a usable string
         title: law.title,
-        subtitle: law.subtitle,
-        publicationDate: law.publicationDate,
+        hasChapters: law.hasChapters.toString(),
       }));
       setLaws((prevLaws) => [...prevLaws, ...mappedLaws]); // Append new laws to the existing list
     } catch (error) {
@@ -54,7 +52,7 @@ const LawList: React.FC<LawListProps> = ({ search }) => {
   }, [page, search]);
 
   const handleLoadMore = () => {
-    if (!loading) setPage((prev) => prev + 1); // Increment page for infinite scroll
+    if (!loading) setPage((prev) => prev + 1); // Increment page for infinite scroll       
   };
 
   return (

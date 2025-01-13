@@ -6,6 +6,7 @@ const _layout = () => {
     <Stack>
         <Stack.Screen name="ChatPage"  options={{ headerShown: false }}/>
         <Stack.Screen name="LawDetail/LawDetailScreen"  options={{title: "Details"}}/>
+        <Stack.Screen name="SectionText" options={{ headerShown: false }} />
     </Stack>
   )
 }

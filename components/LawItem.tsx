@@ -5,8 +5,7 @@ interface LawItemProps {
   law: {
     id: string;
     title: string;
-    subtitle: string;
-    publicationDate: string;
+    hasChapters: string;
   };
 }
 
@@ -16,8 +15,10 @@ const LawItem: React.FC<LawItemProps> = ({ law }) => {
 
   const handlePress = () => {
     // Navigate to the "lawDetail" screen with the law's ID as a parameter
-    // navigation.navigate("lawDetail", { lawId: law.id });
-    router.push("/(screens)/LawDetail/LawDetailScreen");
+    router.push({
+      pathname: "/(screens)/LawDetail/LawDetailScreen",
+      params: { law_id: law.id, title: law.title, hasChapters: law.hasChapters },
+    });
   };
 
   return (

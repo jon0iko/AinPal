@@ -21,6 +21,7 @@
     "@react-navigation/drawer": "^7.1.1",
     "@react-navigation/material-top-tabs": "^7.1.0",
     "@react-navigation/native": "^7.0.14",
+    "@react-navigation/native-stack": "^7.2.0",
     "@react-navigation/stack": "^7.1.1",
     "axios": "^1.7.9",
     "expo": "^52.0.23",
@@ -45,6 +46,7 @@
     "react-native-dotenv": "^3.4.11",
     "react-native-gesture-handler": "~2.20.2",
     "react-native-listener": "^1.1.0",
+    "react-native-pager-view": "6.5.1",
     "react-native-reanimated": "~3.16.1",
     "react-native-safe-area-context": "^4.14.1",
     "react-native-screens": "~4.1.0",
@@ -53,8 +55,7 @@
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "react-navigation-stack": "^2.10.4",
-    "tailwindcss": "^3.4.17",
-    "react-native-pager-view": "6.5.1"
+    "tailwindcss": "^3.4.17"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

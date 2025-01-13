@@ -28,7 +28,7 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
-
+  //#1A4B8C
   return (
     <Stack>
       <Stack.Screen name="index" options={{ headerShown: false }} />
