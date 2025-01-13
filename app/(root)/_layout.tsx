@@ -45,6 +45,17 @@ export default function DrawerLayout() {
           }}
         />
 
+        <Drawer.Screen
+          name="signUp"
+          options={{
+            drawerLabel: "Sign-up",
+            headerTitle: "Sign-up",
+            drawerIcon: ({ size, color }) => (
+              <Ionicons name="create-outline" size={size} color={color} />
+            ),
+          }}
+        />
+
         {/* Settings Screen */}
         <Drawer.Screen
           name="Settings"
@@ -70,6 +81,5 @@ export default function DrawerLayout() {
         />
       </Drawer>
     </GestureHandlerRootView>
-    
   );
 }
