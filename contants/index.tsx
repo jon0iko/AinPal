@@ -1,4 +1,5 @@
 import Onboarding from "@/app/onboarding";
+
 export const onboarding = [
   {
     id: 1,
@@ -22,5 +23,14 @@ export const onboarding = [
     description:
       "Manage your account access with sign-in, sign-out, and Google sign-in options for seamless authentication.",
     animation: require("../assets/images/third.json"),
+  },
+
+];
+
+export const animations = [
+  {
+    id: 4,
+    title: "Account create",
+    animation: require("../assets/images/account.json"), // Replace with your actual animation path
   },
 ];
