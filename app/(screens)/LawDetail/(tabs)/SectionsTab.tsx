@@ -9,6 +9,7 @@ import {
 } from "react-native";
 import { fetchSections } from "@/api/lawDetails";
 import { useRouter } from "expo-router";
+import { Ionicons } from "@expo/vector-icons"; // Ensure this is installed
 
 interface Section {
   section_key: string;
@@ -62,12 +63,19 @@ const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchBar}
-        placeholder="Search sections"
-        value={search}
-        onChangeText={setSearch}
-      />
+      {/* Styled Search Bar */}
+      <View style={styles.searchBarContainer}>
+        <Ionicons name="search" size={20} color="#6C757D" style={styles.icon} />
+        <TextInput
+          style={styles.searchBar}
+          placeholder="Search sections"
+          placeholderTextColor="#6C757D"
+          value={search}
+          onChangeText={setSearch}
+        />
+      </View>
+
+      {/* Sections List */}
       <FlatList
         data={Object.entries(filteredGroupedSections)}
         keyExtractor={([chapterKey]) => chapterKey}
@@ -86,16 +94,17 @@ const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
                   style={styles.sectionItem}
                   onPress={() => {
                     router.push({
-                    pathname: "/(screens)/SectionText",
-                    params: { sectionKey: section.section_key },
-                    })
-                    }
-                  }
+                      pathname: "/(screens)/SectionText",
+                      params: { sectionKey: section.section_key },
+                    });
+                  }}
                 >
                   <Text style={styles.sectionNumber}>
                     Section {section.section_number}.
                   </Text>
-                  <Text style={styles.sectionHeadline}>{section.headline}</Text>
+                  <Text style={styles.sectionHeadline}>
+                    {section.headline}
+                  </Text>
                 </TouchableOpacity>
               )}
             />
@@ -110,14 +119,25 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    backgroundColor: "#EBF2FA", // Background for the page
+  },
+  searchBarContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "#A7C7E7", // Matching the color scheme of "Search laws"
+    borderRadius: 20,
+    paddingHorizontal: 10,
+    paddingVertical: 4,
+    marginBottom: 20,
   },
   searchBar: {
-    height: 40,
-    borderColor: "#ddd",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 16,
+    flex: 1,
+    fontSize: 16,
+    fontFamily: "Jakarta", // Using Jakarta font
+    color: "#212529", // Text color
+  },
+  icon: {
+    marginRight: 10,
   },
   chapterContainer: {
     marginBottom: 20,
