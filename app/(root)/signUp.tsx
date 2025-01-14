@@ -90,8 +90,8 @@ const SignUp = () => {
           style={styles.signUpButton}
         />
 
-        {/* OR Text */}
-        <Text style={styles.orText}>Or</Text>
+        {/* OR Text
+        <Text style={styles.orText}>Or</Text> */}
 
         {/* Google Sign In Button with Icon */}
         <TouchableOpacity
