@@ -1,13 +1,15 @@
-import { View, Text, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, ScrollView, TouchableOpacity, Image, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import type { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
+import TriviaCard from "../../../components/TriviaCard";
 
 export default function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   return (
     <ScrollView className="flex-1 bg-[#EBF2FA]">
+      {/* Blue Section */}
       <View className="p-5 bg-[#1A4B8C] items-center">
         <View className="flex-row justify-between mt-2 w-full">
           <TouchableOpacity
@@ -44,6 +46,9 @@ export default function Home() {
           </TouchableOpacity>
         </View>
       </View>
+
+      {/* Trivia Card Section */}
+      <TriviaCard />
     </ScrollView>
   );
 }
