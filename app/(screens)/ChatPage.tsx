@@ -1,120 +1,128 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
-  Text,
   TextInput,
-  TouchableOpacity,
+  Button,
+  FlatList,
+  Text,
   StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
-import { LinearGradient } from "expo-linear-gradient";
+import { fetchChat } from "@/api/chat";
 
-export default function ChatPage() {
-  const router = useRouter();
+type Message = {
+  sender: "user" | "bot";
+  text: string;
+};
+
+const ChatPage: React.FC = () => {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputText, setInputText] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const handleSend = async () => {
+    if (!inputText.trim()) return;
+
+    const userMessage: Message = { sender: "user", text: inputText };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+    setInputText("");
+    setIsLoading(true);
+
+    try {
+      await fetchChat(inputText, (chunk: string) => {
+        setMessages((prevMessages) => {
+          const lastMessage = prevMessages[prevMessages.length - 1];
+
+          if (lastMessage?.sender === "bot") {
+            // Append to the last bot message
+            return [
+              ...prevMessages.slice(0, -1),
+              { sender: "bot", text: lastMessage.text + chunk },
+            ];
+          } else {
+            // Add a new bot message
+            return [...prevMessages, { sender: "bot", text: chunk }];
+          }
+        });
+      });
+    } catch (error) {
+      console.error("Error in chat:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <LinearGradient
-      colors={["#EBF5FF", "#DCEEFF"]} // Lighter blue gradient
-      style={styles.container}
-    >
-      {/* Header */}
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => router.push("/(root)/(tabs)/chatbot")}>
-          <Ionicons name="arrow-back" size={24} color="#003F7D" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>New Chat</Text>
+    <View style={styles.container}>
+      <FlatList
+        data={messages}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <Text
+            style={[
+              styles.message,
+              item.sender === "user" ? styles.userMessage : styles.botMessage,
+            ]}
+          >
+            {item.text}
+          </Text>
+        )}
+        contentContainerStyle={styles.messageContainer}
+      />
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.input}
+          value={inputText}
+          onChangeText={setInputText}
+          placeholder="Type your message"
+        />
+        <Button
+          title={isLoading ? "Loading..." : "Send"}
+          onPress={handleSend}
+          disabled={isLoading}
+        />
       </View>
-
-      {/* Chat Content Placeholder */}
-      <View style={styles.chatContent}>
-        <Text style={styles.chatPlaceholder}>
-          Your chat messages will appear here...
-        </Text>
-      </View>
-
-      {/* Typing Area */}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.typingAreaContainer}
-      >
-        <View style={styles.typingArea}>
-          <TextInput
-            placeholder="Ask me anything..."
-            placeholderTextColor="#7A9ACF"
-            style={styles.textInput}
-          />
-          <TouchableOpacity style={styles.sendButton}>
-            <Ionicons name="arrow-up" size={20} color="#fff" />
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    </LinearGradient>
+    </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f5f5f5",
   },
-  header: {
+  messageContainer: {
+    padding: 10,
+  },
+  message: {
+    padding: 10,
+    marginVertical: 5,
+    borderRadius: 5,
+  },
+  userMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: "#007aff",
+    color: "#fff",
+  },
+  botMessage: {
+    alignSelf: "flex-start",
+    backgroundColor: "#e5e5ea",
+    color: "#000",
+  },
+  inputContainer: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    paddingHorizontal: 20,
-    paddingVertical: 15,
+    padding: 10,
+    borderTopWidth: 1,
+    borderColor: "#ddd",
   },
-  headerText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#003F7D", // Blue theme
-    marginLeft: 10, // Add spacing between back icon and title
-  },
-  chatContent: {
+  input: {
     flex: 1,
-    padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  chatPlaceholder: {
-    fontSize: 16,
-    color: "#7A9ACF", // Light blue text for placeholder
-    textAlign: "center",
-  },
-  typingAreaContainer: {
-    paddingHorizontal: 20,
-    paddingVertical: 10,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    backgroundColor: "#FFFFFF",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 5,
-    elevation: 5, // Shadow for Android
-  },
-  typingArea: {
-    flexDirection: "row",
-    alignItems: "center",
-    backgroundColor: "#F4F9FF", // Very light blue background
-    borderRadius: 25,
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-  },
-  textInput: {
-    flex: 1,
-    fontSize: 16,
-    color: "#003F7D", // Darker blue for text
-  },
-  sendButton: {
-    backgroundColor: "#003F7D", // Blue button color
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginLeft: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    borderRadius: 5,
+    marginRight: 10,
+    backgroundColor: "#fff",
   },
 });
+
+export default ChatPage;
