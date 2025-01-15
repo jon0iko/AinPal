@@ -188,15 +188,21 @@ const SignUp = () => {
 
         <ReactNativeModal isVisible={showSuccessModal}>
           <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>Verified</Text>
             <Image
               source={require("../../assets/images/check.png")}
               style={styles.checkImage}
             />
-            <Text>You have successfully verified your account.</Text>
+            <Text style={styles.modalText}>Verified</Text>
+            <Text style={styles.Texting}>
+              You have successfully verified your account.
+            </Text>
             <CustomButton
               title="Go to Home"
-              onPress={() => router.push("/home")}
+              onPress={() => {
+                setShowSuccessModal(false); 
+                router.push("/home"); 
+              }}
+              style={{ marginTop: 20 }}
             />
           </View>
         </ReactNativeModal>
@@ -277,9 +283,13 @@ const styles = StyleSheet.create({
     borderRadius: 15,
   },
   modalText: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: "bold",
     marginBottom: 10,
+    left: 110,
+  },
+  Texting: {
+    textShadowColor: "#A0A0A0",
   },
   checkImage: {
     width: 100,

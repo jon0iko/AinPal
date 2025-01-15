@@ -1,89 +1,175 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import {
-  StyleSheet,
+  ScrollView,
   Text,
-  TextInput,
-  TouchableOpacity,
   View,
+  StyleSheet,
+  TouchableOpacity,
   Alert,
 } from "react-native";
+import { router } from "expo-router";
+import CustomButton from "@/components/CustomButton";
+import InputField from "@/components/InputField";
+import { useSignIn } from "@clerk/clerk-expo";
+import Icon from "react-native-vector-icons/FontAwesome";
 
-export default function SignIn() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const SignIn = () => {
+  const { isLoaded, signIn, setActive } = useSignIn();
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+  });
 
-  const handleSignIn = () => {
-    if (!email || !password) {
-      Alert.alert("Error", "Please enter both email and password.");
-      return;
+  const onSignInPress = useCallback(async () => {
+    if (!isLoaded) return;
+
+    try {
+      const signInAttempt = await signIn.create({
+        identifier: form.email,
+        password: form.password,
+      });
+
+      if (signInAttempt.status === "complete") {
+        await setActive({ session: signInAttempt.createdSessionId });
+        router.replace("/(root)/(tabs)/home"); // Navigate to the home screen
+      } else {
+        console.log(JSON.stringify(signInAttempt, null, 2));
+        Alert.alert("Error", "Log in failed. Please try again.");
+      }
+    } catch (err: any) {
+      console.log(JSON.stringify(err, null, 2));
+      Alert.alert("Error", err.errors[0]?.longMessage || "An error occurred");
     }
-    Alert.alert("Success", `Welcome back, ${email}!`);
-    // Add your logic for sign-in here
-  };
+  }, [isLoaded, form]);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Sign In</Text>
+    <ScrollView style={styles.container}>
+      <View style={styles.animationContainer}>
+        <Text style={styles.headerText}>Welcome 👋</Text>
+      </View>
 
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your password"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+      <View style={styles.inputContainer}>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldLabel}>Email</Text>
+          <InputField
+            placeholder="Enter your email"
+            value={form.email}
+            onChangeText={(value) => setForm({ ...form, email: value })}
+            style={styles.inputField}
+          />
+        </View>
 
-      <TouchableOpacity style={styles.button} onPress={handleSignIn}>
-        <Text style={styles.buttonText}>Sign In</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.fieldContainer}>
+          <Text style={styles.fieldLabel}>Password</Text>
+          <InputField
+            placeholder="Enter your password"
+            value={form.password}
+            secureTextEntry
+            onChangeText={(value) => setForm({ ...form, password: value })}
+            style={styles.inputField}
+          />
+        </View>
+
+        <CustomButton
+          title="Sign In"
+          onPress={onSignInPress}
+          style={styles.signUpButton}
+        />
+
+        <TouchableOpacity
+          style={styles.googleButton}
+          onPress={() => console.log("Google Sign-In logic here")}
+        >
+          <Icon name="google" size={20} color="#4285F4" />
+          <Text style={styles.googleButtonText}>Sign in with Google</Text>
+        </TouchableOpacity>
+
+        {/* Forgot Password Navigation */}
+        <TouchableOpacity
+          onPress={() => router.push("/(root)/forgotPassword")}
+          style={styles.linkContainer}
+        >
+          <Text style={styles.linkHighlight}>Forgot Password?</Text>
+        </TouchableOpacity>
+
+        <View style={styles.linkContainer}>
+          <Text style={styles.linkText}>Don't have an account? </Text>
+          <TouchableOpacity onPress={() => router.push("/(root)/signUp")}>
+            <Text style={styles.linkSignUp}>Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f9f9f9",
-    paddingHorizontal: 20,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 20,
-  },
-  input: {
-    width: "100%",
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    marginBottom: 15,
     backgroundColor: "#fff",
-    fontSize: 16,
   },
-  button: {
-    backgroundColor: "#007bff",
-    paddingVertical: 15,
-    paddingHorizontal: 30,
-    borderRadius: 8,
-    width: "100%",
+  animationContainer: {
     alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 20,
   },
-  buttonText: {
-    color: "#fff",
+  headerText: {
+    fontSize: 24,
+    fontWeight: "800",
+    color: "#333",
+  },
+  inputContainer: {
+    padding: 20,
+  },
+  fieldContainer: {
+    marginBottom: 15,
+  },
+  fieldLabel: {
     fontSize: 16,
+    marginBottom: 5,
+  },
+  inputField: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 10,
+  },
+  signUpButton: {
+    marginTop: 20,
+    backgroundColor: "#007bff",
+    padding: 15,
+    borderRadius: 10,
+  },
+  googleButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 30,
+  },
+  googleButtonText: {
+    marginLeft: 10,
+  },
+  linkContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    marginTop: 15,
+  },
+  linkText: {
+    color: "#333",
+  },
+  linkHighlight: {
+    color: "#007bff",
+    fontWeight: "bold",
+    left:0,
+  },
+  linkSignUp: {
+    color: "#007bff",
     fontWeight: "bold",
   },
 });
+
+export default SignIn;
