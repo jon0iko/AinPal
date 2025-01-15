@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -7,13 +7,36 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { LinearGradient } from "expo-linear-gradient";
+import { fetchChatResponse } from "@/api/chat";
+
+// Type Definitions
+interface Message {
+  type: "user" | "bot";
+  content: string;
+}
 
 export default function ChatPage() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputText, setInputText] = useState<string>("");
   const router = useRouter();
+
+  // Handle sending the message
+  const handleSendMessage = async (): Promise<void> => {
+    if (!inputText.trim()) return; // Prevent sending empty messages
+    const userMessage: Message = { type: "user", content: inputText.trim() };
+    setMessages((prev) => [...prev, userMessage]); // Add user message to chat
+
+    setInputText(""); // Clear input field
+
+    const botResponse = await fetchChatResponse(inputText.trim()); // Fetch response
+    const botMessage: Message = { type: "bot", content: botResponse };
+    setMessages((prev) => [...prev, botMessage]); // Add bot response to chat
+  };
 
   return (
     <LinearGradient
@@ -28,12 +51,22 @@ export default function ChatPage() {
         <Text style={styles.headerText}>New Chat</Text>
       </View>
 
-      {/* Chat Content Placeholder */}
-      <View style={styles.chatContent}>
-        <Text style={styles.chatPlaceholder}>
-          Your chat messages will appear here...
-        </Text>
-      </View>
+      {/* Chat Messages */}
+      <FlatList
+        data={messages}
+        keyExtractor={(_, index) => index.toString()}
+        renderItem={({ item }) => (
+          <View
+            style={[
+              styles.messageBubble,
+              item.type === "user" ? styles.userMessage : styles.botMessage,
+            ]}
+          >
+            <Text style={styles.messageText}>{item.content}</Text>
+          </View>
+        )}
+        contentContainerStyle={styles.chatContent}
+      />
 
       {/* Typing Area */}
       <KeyboardAvoidingView
@@ -45,8 +78,13 @@ export default function ChatPage() {
             placeholder="Ask me anything..."
             placeholderTextColor="#7A9ACF"
             style={styles.textInput}
+            value={inputText}
+            onChangeText={setInputText}
           />
-          <TouchableOpacity style={styles.sendButton}>
+          <TouchableOpacity
+            style={styles.sendButton}
+            onPress={handleSendMessage}
+          >
             <Ionicons name="arrow-up" size={20} color="#fff" />
           </TouchableOpacity>
         </View>
@@ -55,6 +93,7 @@ export default function ChatPage() {
   );
 }
 
+// Styles
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -73,15 +112,26 @@ const styles = StyleSheet.create({
     marginLeft: 10, // Add spacing between back icon and title
   },
   chatContent: {
-    flex: 1,
+    flexGrow: 1,
     padding: 20,
-    justifyContent: "center",
-    alignItems: "center",
   },
-  chatPlaceholder: {
+  messageBubble: {
+    padding: 10,
+    borderRadius: 15,
+    marginVertical: 5,
+    maxWidth: "80%",
+  },
+  userMessage: {
+    backgroundColor: "#DCEEFF",
+    alignSelf: "flex-end",
+  },
+  botMessage: {
+    backgroundColor: "#EBF5FF",
+    alignSelf: "flex-start",
+  },
+  messageText: {
     fontSize: 16,
-    color: "#7A9ACF", // Light blue text for placeholder
-    textAlign: "center",
+    color: "#003F7D",
   },
   typingAreaContainer: {
     paddingHorizontal: 20,
