@@ -15,7 +15,8 @@ const TriviaCard = () => {
       <View style={styles.textContainer}>
         <Text style={styles.title}>Did You Know?</Text>
         <Text style={styles.info}>
-          Bangladesh was the first South Asian country to legalize the Right to Information Act in 2009!
+          The Bangladesh Labour Act, 2006 guarantees maternity leave of 16 weeks
+          (8 weeks before and 8 weeks after delivery) for working women.
         </Text>
       </View>
     </LinearGradient>
