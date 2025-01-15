@@ -9,9 +9,10 @@ export default function DrawerLayout() {
       <Drawer
         drawerContent={CustomDrawerContent}
         screenOptions={{
-          drawerActiveBackgroundColor: "#5363df",
+          drawerActiveBackgroundColor: "#5363df", // Background color for active item
+          drawerActiveTintColor: "#fff", // White text for active item
+          drawerInactiveTintColor: "#fff", // White text for inactive items
           drawerHideStatusBarOnOpen: true,
-          drawerActiveTintColor: "#fff",
           drawerLabelStyle: {
             marginLeft: -8, // Adjust to control text position
             fontSize: 14, // Optional: Adjust text size
@@ -45,6 +46,7 @@ export default function DrawerLayout() {
           }}
         />
 
+        {/* Sign-Up Screen */}
         <Drawer.Screen
           name="signUp"
           options={{

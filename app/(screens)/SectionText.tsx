@@ -11,7 +11,7 @@ import { fetchSectionDetails } from "../../api/sectionDetails";
 import { useNavigation } from "@react-navigation/native";
 import { useSearchParams } from "expo-router/build/hooks";
 import { Ionicons } from "@expo/vector-icons";
-
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 
 interface SectionTextProps {
   route: {
@@ -70,15 +70,22 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
         style={styles.backButton}
         onPress={() => navigation.goBack()}
       >
-        <Ionicons name="arrow-back" size={28} color="#003F7D"/>
+        <Ionicons name="arrow-back" size={28} color="#003F7D" />
       </TouchableOpacity>
 
       {/* Content */}
       <ScrollView style={styles.container}>
-        <Text style={styles.sectionNumber}>
-          Section {sectionDetails.section_number}
-        </Text>
-        <Text style={styles.headline}>{sectionDetails.headline}</Text>
+        <LinearGradient
+          colors={["#6f9ec9", "#003F7D"]} // Gradient colors (light to dark)
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 1 }}
+          style={styles.headerContainer}
+        >
+          <Text style={styles.sectionNumber}>
+            Section {sectionDetails.section_number}
+          </Text>
+          <Text style={styles.headline}>{sectionDetails.headline}</Text>
+        </LinearGradient>
         <Text style={styles.markdownText}>{sectionDetails.markdown_text}</Text>
       </ScrollView>
     </View>
@@ -88,32 +95,37 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
 const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
-    marginTop: 16,
-    marginBottom: 16,
+    backgroundColor: "#EBF2FA",
   },
   container: {
     flex: 1,
-    padding: 16,
+    padding: 20,
     marginBottom: 16,
   },
+  headerContainer: {
+    borderRadius: 8,
+    paddingVertical: 16,
+    paddingHorizontal: 12,
+    marginBottom: 16,
+    alignItems: "center",
+  },
   sectionNumber: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#003366",
-    marginBottom: 8,
-    textAlign: "center",
+    color: "#FFFFFF", // White text for better contrast with gradient
   },
   headline: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#0055AA",
-    marginBottom: 24,
-    textAlign: "center",
+    color: "#FFFFFF", // White text for better contrast with gradient
+    marginTop: 4,
   },
   markdownText: {
-    fontSize: 16,
-    lineHeight: 24,
+    fontSize: 18,
+    lineHeight: 28,
     color: "#333333",
+    textAlign: "justify",
+    marginTop: 16,
   },
   loaderContainer: {
     flex: 1,
@@ -131,10 +143,11 @@ const styles = StyleSheet.create({
   },
   backButton: {
     padding: 12,
-    backgroundColor: "#EEEEEE",
+    backgroundColor: "#F0F4F8",
     borderRadius: 8,
     alignSelf: "flex-start",
     marginLeft: 16,
+    marginTop: 10,
     marginBottom: 10,
   },
 });

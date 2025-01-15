@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { View, Text, Image, Share } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function CustomDrawerContent(props: any) {
   const { top, bottom } = useSafeAreaInsets();
@@ -33,11 +34,11 @@ export default function CustomDrawerContent(props: any) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <LinearGradient colors={["#5363df", "#21256e"]} style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
         scrollEnabled={false}
-        contentContainerStyle={{ backgroundColor: "#dde3fe" }}
+        contentContainerStyle={{ flexGrow: 1 }}
       >
         <View style={{ padding: 20 }}>
           <Image
@@ -50,7 +51,7 @@ export default function CustomDrawerContent(props: any) {
               fontWeight: "500",
               fontSize: 18,
               paddingTop: 10,
-              color: "#5363df",
+              color: "#ffffff",
             }}
           >
             Yuki Bhuiyan
@@ -58,35 +59,38 @@ export default function CustomDrawerContent(props: any) {
         </View>
 
         {/* Drawer Items */}
-        <View style={{ backgroundColor: "#fff", padding: 10 }}>
+        <View style={{ padding: 10 }}>
           <DrawerItemList {...props} />
 
           {/* Share App Button */}
           <DrawerItem
             label="Share App"
             icon={() => (
-              <Ionicons name="share-social" size={20} color="black" />
+              <Ionicons name="share-social" size={20} color="white" />
             )}
             onPress={onShare}
+            labelStyle={{ color: "#ffffff" }}
           />
         </View>
 
         {/* Logout Button */}
-        <View style={{ backgroundColor: "#fff", padding: 10 }}>
-          <DrawerItem label="Logout" onPress={() => route.replace("/")} />
+        <View style={{ padding: 10 }}>
+          <DrawerItem
+            label="Logout"
+            onPress={() => route.replace("/")}
+            labelStyle={{ color: "#ffffff" }}
+          />
         </View>
       </DrawerContentScrollView>
 
       <View
         style={{
-          borderTopColor: "#dde3fe",
+          borderTopColor: "#ffffff",
           borderTopWidth: 1,
           padding: 20,
           paddingBottom: 20 + bottom,
         }}
-      >
-        
-      </View>
-    </View>
+      ></View>
+    </LinearGradient>
   );
 }

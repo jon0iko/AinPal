@@ -5,6 +5,7 @@ import Swiper from "react-native-swiper";
 import { useRef, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LottieView from "lottie-react-native";
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 import { onboarding } from "@/contants";
 
 const Onboarding = () => {
@@ -58,27 +59,50 @@ const Onboarding = () => {
               {item.description}
             </Text>
 
-            {/* Next Button */}
+            {/* Buttons */}
             {activeIndex < onboarding.length - 1 ? (
+              // Next Button
               <TouchableOpacity
                 onPress={goToNextSlide}
-                className="mt-8 bg-green-400 p-3 rounded-md"
+                className="mt-8 p-3 rounded-md"
+                style={{ backgroundColor: "#1B5E20" }} // Green for Next
               >
                 <Text className="text-white font-bold">Next</Text>
               </TouchableOpacity>
             ) : (
-              <TouchableOpacity
-                onPress={completeOnboarding}
-                className="mt-8 bg-blue-600 p-3 rounded-md"
+              // Get Started Button with Green Gradient
+              <LinearGradient
+                colors={["#004D40", "#1B5E20"]}
+                start={{ x: 0, y: 0 }}
+                end={{ x: 1, y: 1 }}
+                style={styles.startButton}
               >
-                <Text className="text-white">Get Started</Text>
-              </TouchableOpacity>
+                <TouchableOpacity onPress={completeOnboarding}>
+                  <Text style={styles.startButtonText}>Get Started</Text>
+                </TouchableOpacity>
+              </LinearGradient>
             )}
           </View>
         ))}
       </Swiper>
     </SafeAreaView>
   );
+};
+
+const styles = {
+  startButton: {
+    marginTop: 32,
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
+    alignItems: "center" as "center",
+  },
+  startButtonText: {
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontWeight: "700",
+    textAlign: "center",
+  },
 };
 
 export default Onboarding;
