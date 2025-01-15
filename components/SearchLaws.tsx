@@ -8,6 +8,15 @@ interface SearchLawsProps {
 }
 
 const SearchLaws: React.FC<SearchLawsProps> = ({ search, setSearch }) => {
+  const handleSearchChange = (text: string) => {
+    setSearch(text); // Allow the user to type spaces freely
+  };
+
+  const handleSearchBlur = () => {
+    setSearch(search.trim()); // Trim leading and trailing spaces when the input loses focus
+  };
+
+
   return (
     <View style={styles.container}>
       <View style={styles.searchBarContainer}>
@@ -17,7 +26,8 @@ const SearchLaws: React.FC<SearchLawsProps> = ({ search, setSearch }) => {
           placeholder="Search Acts"
           placeholderTextColor="#6C757D"
           value={search}
-          onChangeText={setSearch}
+          onChangeText={handleSearchChange} // Update search term as user types
+          onBlur={handleSearchBlur} // Trim spaces when the user finishes typing
         />
         <TouchableOpacity style={styles.filterButton}>
           <Ionicons name="options" size={20} color="#6C757D" />

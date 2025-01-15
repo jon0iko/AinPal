@@ -33,7 +33,16 @@ const LawList: React.FC<LawListProps> = ({ search }) => {
         title: law.title,
         hasChapters: law.hasChapters.toString(),
       }));
-      setLaws((prevLaws) => [...prevLaws, ...mappedLaws]); // Append new laws to the existing list
+       setLaws((prevLaws) => {
+         // If it's a new search (first page), replace the list
+         if (page === 1) {
+           return mappedLaws;
+         }
+         // Otherwise, append new results and deduplicate
+         const uniqueLaws = new Map(prevLaws.map((law) => [law.id, law])); // Add existing laws
+         mappedLaws.forEach((law:any) => uniqueLaws.set(law.id, law)); // Add new laws
+         return Array.from(uniqueLaws.values()); // Convert back to array
+       });
     } catch (error) {
       console.error("Error loading laws:", error);
     } finally {
