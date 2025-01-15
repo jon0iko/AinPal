@@ -3,10 +3,11 @@ import { useNavigation } from "@react-navigation/native";
 import type { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
 import TriviaCard from "../../../components/TriviaCard";
-
+import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
+import { Link } from "expo-router";
 export default function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
-
+    const { user } = useUser();
   return (
     <ScrollView className="flex-1 bg-[#EBF2FA]">
       {/* Blue Section */}
@@ -44,6 +45,7 @@ export default function Home() {
               Bookmarks
             </Text>
           </TouchableOpacity>
+          
         </View>
       </View>
 

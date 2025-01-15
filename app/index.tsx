@@ -1,9 +1,15 @@
 import { useEffect } from 'react';
-import { router } from 'expo-router';
+import { Redirect, router } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import 'react-native-gesture-handler';
+import { useAuth } from '@clerk/clerk-expo';
 
 export default function Index() {
+      const { isSignedIn } = useAuth();
+
+      if (isSignedIn) {
+        return <Redirect href={"/(root)/(tabs)/home"} />;
+      }
     // Reset onboarding status on each app start (for testing purposes)
     useEffect(() => {
         const resetOnboarding = async () => {
