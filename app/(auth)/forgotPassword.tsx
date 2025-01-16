@@ -24,9 +24,11 @@ const ForgotPassword = () => {
         onChangeText={setEmail}
       />
       <CustomButton title="Send Reset Link" onPress={handleReset} />
+
       <CustomButton
         title="Back to Sign In"
-        onPress={() => router.push("/(auth)/signIn")}
+        onPress={() => router.push("../signIn")}
+        style={{ marginTop: 20 }}
       />
     </View>
   );

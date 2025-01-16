@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   Alert,
 } from "react-native";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { useSignIn } from "@clerk/clerk-expo";
@@ -85,18 +85,17 @@ const SignIn = () => {
         </TouchableOpacity>
 
         {/* Forgot Password Navigation */}
-        <TouchableOpacity
-          onPress={() => router.push("/(root)/forgotPassword")}
-          style={styles.linkContainer}
-        >
-          <Text style={styles.linkHighlight}>Forgot Password?</Text>
-        </TouchableOpacity>
+        <View style={styles.linkContainer}>
+          <Link href="/(auth)/forgotPassword" style={styles.linkHighlight}>
+            Forgot Password?
+          </Link>
+        </View>
 
         <View style={styles.linkContainer}>
           <Text style={styles.linkText}>Don't have an account? </Text>
-          <TouchableOpacity onPress={() => router.push("/(root)/signUp")}>
-            <Text style={styles.linkSignUp}>Sign Up</Text>
-          </TouchableOpacity>
+          <Link href="/(root)/signUp" style={styles.linkSignUp}>
+            Sign Up
+          </Link>
         </View>
       </View>
     </ScrollView>
@@ -164,7 +163,7 @@ const styles = StyleSheet.create({
   linkHighlight: {
     color: "#007bff",
     fontWeight: "bold",
-    left:0,
+    left: 0,
   },
   linkSignUp: {
     color: "#007bff",

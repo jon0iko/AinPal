@@ -1,4 +1,5 @@
 import CustomDrawerContent from "@/components/CustomDrawerContent";
+import { useAuth } from "@clerk/clerk-react";
 import { Ionicons } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
