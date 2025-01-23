@@ -95,7 +95,7 @@ const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
                   onPress={() => {
                     router.push({
                       pathname: "/(screens)/SectionText",
-                      params: { sectionKey: section.section_key },
+                      params: { sectionKey: section.section_key, lawId: lawId },
                     });
                   }}
                 >
