@@ -1,9 +1,9 @@
 import { useOAuth } from "@clerk/clerk-expo";
 import { router } from "expo-router";
-import { Alert, Image, Text, View } from "react-native";
+import { Alert, Image, Text, View, StyleSheet } from "react-native";
 
 import CustomButton from "@/components/CustomButton";
-import { icons } from "@/constants";
+
 import { googleOAuth } from "@/lib/auth";
 
 const OAuth = () => {
@@ -30,12 +30,13 @@ const OAuth = () => {
 
       <CustomButton
         title="Log In with Google"
+        style={styles.signUpButton}
         className="mt-5 w-full shadow-none"
         IconLeft={() => (
           <Image
-            source={icons.google}
+            source={require("../assets/icons/google.png")}
             resizeMode="contain"
-            className="w-5 h-5 mx-2"
+            style={{ width: 20, height: 20, marginHorizontal: 8 }}
           />
         )}
         bgVariant="outline"
@@ -45,5 +46,14 @@ const OAuth = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  signUpButton: {
+    marginTop: 5,
+    backgroundColor: "#ECECEC",
+    padding: 15,
+    borderRadius: 50,
+  },
+});
 
 export default OAuth;

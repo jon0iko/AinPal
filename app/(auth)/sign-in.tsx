@@ -12,6 +12,7 @@ import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { useSignIn } from "@clerk/clerk-expo";
 import Icon from "react-native-vector-icons/FontAwesome";
+import OAuth from "@/components/OAuth";
 
 const SignIn = () => {
   const { isLoaded, signIn, setActive } = useSignIn();
@@ -54,8 +55,7 @@ const SignIn = () => {
           <InputField
             placeholder="Enter your email"
             value={form.email}
-            onChangeText={(value) => setForm({ ...form, email: value })}
-            style={styles.inputField}
+            onChangeText={(value: any) => setForm({ ...form, email: value })}
           />
         </View>
 
@@ -65,8 +65,7 @@ const SignIn = () => {
             placeholder="Enter your password"
             value={form.password}
             secureTextEntry
-            onChangeText={(value) => setForm({ ...form, password: value })}
-            style={styles.inputField}
+            onChangeText={(value: any) => setForm({ ...form, password: value })}
           />
         </View>
 
@@ -76,14 +75,7 @@ const SignIn = () => {
           style={styles.signUpButton}
         />
 
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={() => console.log("Google Sign-In logic here")}
-        >
-          <Icon name="google" size={20} color="#4285F4" />
-          <Text style={styles.googleButtonText}>Sign in with Google</Text>
-        </TouchableOpacity>
-
+        <OAuth/>
         {/* Forgot Password Navigation */}
         <View style={styles.linkContainer}>
           <Link href="/(auth)/forgotPassword" style={styles.linkHighlight}>
@@ -137,7 +129,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "#007bff",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 50,
   },
   googleButton: {
     flexDirection: "row",
