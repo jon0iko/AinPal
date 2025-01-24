@@ -16,6 +16,7 @@ import CustomButton from "@/components/CustomButton";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useSignUp } from "@clerk/clerk-expo";
 import ReactNativeModal from "react-native-modal";
+import OAuth from "@/components/OAuth";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -112,8 +113,7 @@ const SignUp = () => {
           <InputField
             placeholder="Enter your name"
             value={form.name}
-            onChangeText={(value) => setForm({ ...form, name: value })}
-            style={styles.inputField}
+            onChangeText={(value: string) => setForm({ ...form, name: value })}
           />
         </View>
 
@@ -122,8 +122,7 @@ const SignUp = () => {
           <InputField
             placeholder="Enter your email"
             value={form.email}
-            onChangeText={(value) => setForm({ ...form, email: value })}
-            style={styles.inputField}
+            onChangeText={(value: string) => setForm({ ...form, email: value })}
           />
         </View>
 
@@ -133,8 +132,9 @@ const SignUp = () => {
             placeholder="Enter your password"
             value={form.password}
             secureTextEntry
-            onChangeText={(value) => setForm({ ...form, password: value })}
-            style={styles.inputField}
+            onChangeText={(value: string) =>
+              setForm({ ...form, password: value })
+            }
           />
         </View>
 
@@ -144,14 +144,7 @@ const SignUp = () => {
           style={styles.signUpButton}
         />
 
-        <TouchableOpacity
-          style={styles.googleButton}
-          onPress={() => console.log("Google Sign-In logic here")}
-        >
-          <Icon name="google" size={20} color="#4285F4" />
-          <Text style={styles.googleButtonText}>Sign in with Google</Text>
-        </TouchableOpacity>
-
+       <OAuth/>
         <View style={styles.linkContainer}>
           <Text style={styles.linkText}>Already have an account? </Text>
           <Link href="/sign-in">
@@ -171,14 +164,16 @@ const SignUp = () => {
               We've sent a verification code to {form.email}. Please enter it
               below.
             </Text>
-            <InputField
-              placeholder="Enter code"
-              value={verification.code}
-              keyboardType="numeric"
-              onChangeText={(code) =>
-                setVerification({ ...verification, code })
-              }
-            />
+            <View style={{ marginBottom: 25 }}>
+              <InputField
+                placeholder="Enter code"
+                value={verification.code}
+                keyboardType="numeric"
+                onChangeText={(code: any) =>
+                  setVerification({ ...verification, code })
+                }
+              />
+            </View>
             {verification.error && (
               <Text style={{ color: "red" }}>{verification.error}</Text>
             )}
@@ -199,8 +194,8 @@ const SignUp = () => {
             <CustomButton
               title="Go to Home"
               onPress={() => {
-                setShowSuccessModal(false); 
-                router.push("/home"); 
+                setShowSuccessModal(false);
+                router.push("/home");
               }}
               style={{ marginTop: 20 }}
             />
@@ -250,7 +245,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     backgroundColor: "#007bff",
     padding: 15,
-    borderRadius: 10,
+    borderRadius: 50,
   },
   googleButton: {
     flexDirection: "row",
