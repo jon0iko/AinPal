@@ -11,10 +11,11 @@ interface BookmarkContextType {
   bookmarks: Bookmark[];
   toggleBookmark: (law: Bookmark) => void;
   isBookmarked: (id: string) => boolean;
+  bookmarkCount: number; // Add bookmarkCount to the context
 }
 
 interface BookmarkProviderProps {
-  children: ReactNode; // Add this line to define the children prop
+  children: ReactNode;
 }
 
 const BookmarkContext = createContext<BookmarkContextType | undefined>(
@@ -55,7 +56,12 @@ export const BookmarkProvider: React.FC<BookmarkProviderProps> = ({
 
   return (
     <BookmarkContext.Provider
-      value={{ bookmarks, toggleBookmark, isBookmarked }}
+      value={{
+        bookmarks,
+        toggleBookmark,
+        isBookmarked,
+        bookmarkCount: bookmarks.length, // Calculate count dynamically
+      }}
     >
       {children}
     </BookmarkContext.Provider>

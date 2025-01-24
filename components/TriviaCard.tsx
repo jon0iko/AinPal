@@ -10,7 +10,7 @@ const TriviaCard = () => {
       style={styles.cardContainer}
     >
       <View style={styles.iconContainer}>
-        <Ionicons name="bulb-outline" size={40} color="#1A4B8C" />
+        <Ionicons name="bulb-outline" size={50} color="#1A4B8C" />
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>Did You Know?</Text>
@@ -24,7 +24,9 @@ const TriviaCard = () => {
 };
 
 const styles = StyleSheet.create({
+  
   cardContainer: {
+    marginTop:45,
     margin: 16,
     borderRadius: 16,
     padding: 16,
@@ -43,15 +45,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 18,
+    fontSize: 22,
     fontWeight: "bold",
     color: "#1A4B8C", // Specified blue color
     marginBottom: 8,
   },
   info: {
-    fontSize: 14,
+    fontSize: 15,
     color: "#343A30", // Neutral-500
-    lineHeight: 20,
+    lineHeight: 28,
   },
 });
 
