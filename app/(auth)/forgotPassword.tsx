@@ -27,7 +27,7 @@ const ForgotPassword = () => {
 
       <CustomButton
         title="Back to Sign In"
-        onPress={() => router.push("../signIn")}
+        onPress={() => router.push("../sign-in")}
         style={{ marginTop: 20 }}
       />
     </View>
