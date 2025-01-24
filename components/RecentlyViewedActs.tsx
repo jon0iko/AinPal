@@ -1,34 +1,58 @@
-import React from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import { View, ScrollView, Text, TouchableOpacity } from "react-native";
+import { useRouter } from "expo-router"; // Use expo-router's navigation
+import { getRecentlyViewedLaws } from "@/api/storage";
+import { useFocusEffect } from "@react-navigation/native";
 
-interface RecentTab {
-  id: string;
-  title: string;
-  subtitle: string;
+interface law {
+    id: string;
+    title: string;
+    hasChapters: string;
 }
 
-interface SideScrollViewProps {
-  tabs: RecentTab[];
-  onTabPress: (id: string) => void;
-}
+const RecentlyViewed: React.FC = () => {
+  const router = useRouter(); // Initialize router for navigation
+  const [recentLaws, setRecentLaws] = useState([]);
 
-const RecentlyViewedActs: React.FC<SideScrollViewProps> = ({ tabs, onTabPress }) => {
+  // Fetch recent laws when the screen gains focus
+  useFocusEffect(
+    React.useCallback(() => {
+      async function fetchRecentLaws() {
+        const laws = await getRecentlyViewedLaws();
+        setRecentLaws(laws);
+      }
+      fetchRecentLaws();
+    }, [])
+  );
+
   return (
     <View className="mt-4 px-4">
-      <Text className="text-lg font-semibold text-[#1A4B8C]">Recently Viewed</Text>
+      <Text className="text-lg font-semibold text-[#1A4B8C]">
+        Recently Viewed
+      </Text>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
         className="flex-row mt-2"
       >
-        {tabs.map((tab) => (
+        {recentLaws.map((law: law) => (
           <TouchableOpacity
-            key={tab.id}
+            key={law.id}
             className="bg-white rounded-lg shadow-md mr-4 p-4 w-48"
-            onPress={() => onTabPress(tab.id)}
+            onPress={() =>
+              router.push({
+                pathname: "/(screens)/LawDetail/LawDetailScreen",
+                params: {
+                  law_id: law.id,
+                  title: law.title,
+                  hasChapters: law.hasChapters,
+                },
+              })
+            }
           >
-            <Text className="text-sm font-medium text-[#1A4B8C]">{tab.title}</Text>
-            <Text className="text-xs text-gray-600 mt-1">{tab.subtitle}</Text>
+            <Text className="text-sm font-medium text-[#1A4B8C]">
+              {law.title}
+            </Text>
           </TouchableOpacity>
         ))}
       </ScrollView>
@@ -36,4 +60,4 @@ const RecentlyViewedActs: React.FC<SideScrollViewProps> = ({ tabs, onTabPress })
   );
 };
 
-export default RecentlyViewedActs;
+export default RecentlyViewed;

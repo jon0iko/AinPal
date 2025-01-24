@@ -4,7 +4,6 @@ import type { NavigationProp } from "@react-navigation/native";
 import { RootStackParamList } from "../../types";
 import TriviaCard from "../../../components/TriviaCard";
 import { SignedIn, SignedOut, useUser } from "@clerk/clerk-expo";
-import { Link } from "expo-router";
 import RecentlyViewedActs from "@/components/RecentlyViewedActs";
 export default function Home() {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -54,7 +53,7 @@ export default function Home() {
       <TriviaCard />
       
       {/* Recently Viewed Section */}
-      <RecentlyViewedActs tabs={[]} onTabPress={() => {}} />
+      <RecentlyViewedActs />
 
       {/* Blue Section */}
     </ScrollView>
