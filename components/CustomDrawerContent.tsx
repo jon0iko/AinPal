@@ -11,6 +11,7 @@ import { LinearGradient } from "expo-linear-gradient";
 
 export default function CustomDrawerContent(props: any) {
   const { top, bottom } = useSafeAreaInsets();
+  const user = { isLoggedIn: true, name: "User" }; // Define the user object
   const route = useRouter();
   const url = "https://github.com/jon0iko/AinPal";
 
@@ -54,7 +55,8 @@ export default function CustomDrawerContent(props: any) {
               color: "#ffffff",
             }}
           >
-            Yuki Bhuiyan
+            {/* Display user's email if logged in, otherwise "User" */}
+            {user.isLoggedIn ? user.name : "User"}
           </Text>
         </View>
 

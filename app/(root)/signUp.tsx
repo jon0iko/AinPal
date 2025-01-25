@@ -9,14 +9,14 @@ import {
   Alert,
 } from "react-native";
 import LottieView from "lottie-react-native";
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 import { animations } from "@/contants";
 import InputField from "@/components/InputField";
 import { Link, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { useSignUp } from "@clerk/clerk-expo";
 import ReactNativeModal from "react-native-modal";
 import OAuth from "@/components/OAuth";
+import { useSignUp } from "@clerk/clerk-expo";
 
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -28,7 +28,7 @@ const SignUp = () => {
   });
 
   const [verification, setVerification] = useState({
-    state: "default", // Adjusted to include a "default" state
+    state: "default",
     error: "",
     code: "",
   });
@@ -56,12 +56,7 @@ const SignUp = () => {
           strategy: "email_code",
         }
       );
-      console.log("Verification Response:", verificationResponse);
-
-      setVerification({
-        ...verification,
-        state: "pending",
-      });
+      setVerification({ ...verification, state: "pending" });
     } catch (err: any) {
       Alert.alert("Error", err.errors[0].longMessage);
     }
@@ -95,121 +90,85 @@ const SignUp = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.animationContainer}>
-        <LottieView
-          autoPlay
-          loop
-          ref={animation}
-          style={styles.animation}
-          source={accountAnimation?.animation}
-        />
-        <Text style={styles.headerText}>Create Your Account</Text>
-      </View>
-
-      <View style={styles.inputContainer}>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>Name</Text>
-          <InputField
-            placeholder="Enter your name"
-            value={form.name}
-            onChangeText={(value: string) => setForm({ ...form, name: value })}
+    <LinearGradient
+      colors={["#304362", "#d7d2cc"]} // Gradient colors
+      start={{ x: 0, y: 0 }} // Start of the gradient
+      end={{ x: 1, y: 1 }} // End of the gradient
+      style={styles.gradient}
+    >
+      <ScrollView style={styles.container}>
+        <View style={styles.animationContainer}>
+          <LottieView
+            autoPlay
+            loop
+            ref={animation}
+            style={styles.animation}
+            source={accountAnimation?.animation}
           />
+          <Text style={styles.headerText}>Create Your Account</Text>
         </View>
 
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>Email</Text>
-          <InputField
-            placeholder="Enter your email"
-            value={form.email}
-            onChangeText={(value: string) => setForm({ ...form, email: value })}
-          />
-        </View>
-
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>Password</Text>
-          <InputField
-            placeholder="Enter your password"
-            value={form.password}
-            secureTextEntry
-            onChangeText={(value: string) =>
-              setForm({ ...form, password: value })
-            }
-          />
-        </View>
-
-        <CustomButton
-          title="Sign Up"
-          onPress={onSignUpPress}
-          style={styles.signUpButton}
-        />
-
-       <OAuth/>
-        <View style={styles.linkContainer}>
-          <Text style={styles.linkText}>Already have an account? </Text>
-          <Link href="/sign-in">
-            <Text style={styles.linkHighlight}>Log In</Text>
-          </Link>
-        </View>
-
-        <ReactNativeModal
-          isVisible={verification.state === "pending"}
-          onModalHide={() => {
-            if (verification.state === "success") setShowSuccessModal(true);
-          }}
-        >
-          <View style={styles.modalContainer}>
-            <Text style={styles.modalText}>Verification</Text>
-            <Text>
-              We've sent a verification code to {form.email}. Please enter it
-              below.
-            </Text>
-            <View style={{ marginBottom: 25 }}>
-              <InputField
-                placeholder="Enter code"
-                value={verification.code}
-                keyboardType="numeric"
-                onChangeText={(code: any) =>
-                  setVerification({ ...verification, code })
-                }
-              />
-            </View>
-            {verification.error && (
-              <Text style={{ color: "red" }}>{verification.error}</Text>
-            )}
-            <CustomButton title="Verify Email" onPress={onPressVerify} />
-          </View>
-        </ReactNativeModal>
-
-        <ReactNativeModal isVisible={showSuccessModal}>
-          <View style={styles.modalContainer}>
-            <Image
-              source={require("../../assets/images/check.png")}
-              style={styles.checkImage}
-            />
-            <Text style={styles.modalText}>Verified</Text>
-            <Text style={styles.Texting}>
-              You have successfully verified your account.
-            </Text>
-            <CustomButton
-              title="Go to Home"
-              onPress={() => {
-                setShowSuccessModal(false);
-                router.push("/home");
-              }}
-              style={{ marginTop: 20 }}
+        <View style={styles.inputContainer}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Name</Text>
+            <InputField
+              placeholder="Enter your name"
+              value={form.name}
+              onChangeText={(value: string) =>
+                setForm({ ...form, name: value })
+              }
             />
           </View>
-        </ReactNativeModal>
-      </View>
-    </ScrollView>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Email</Text>
+            <InputField
+              placeholder="Enter your email"
+              value={form.email}
+              onChangeText={(value: string) =>
+                setForm({ ...form, email: value })
+              }
+            />
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Password</Text>
+            <InputField
+              placeholder="Enter your password"
+              value={form.password}
+              secureTextEntry
+              onChangeText={(value: string) =>
+                setForm({ ...form, password: value })
+              }
+            />
+          </View>
+
+          <CustomButton
+            title="Sign Up"
+            onPress={onSignUpPress}
+            style={styles.signUpButton}
+          />
+
+          <OAuth />
+          <View style={styles.linkContainer}>
+            <Text style={styles.linkText}>Already have an account? </Text>
+            <Link href="/sign-in">
+              <Text style={styles.linkHighlight}>Log In</Text>
+            </Link>
+          </View>
+        </View>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradient: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    padding: 20,
   },
   animationContainer: {
     alignItems: "center",
@@ -235,30 +194,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
-  inputField: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
-    padding: 10,
-  },
   signUpButton: {
     marginTop: 20,
     backgroundColor: "#007bff",
     padding: 15,
     borderRadius: 50,
-  },
-  googleButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 15,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 30,
-  },
-  googleButtonText: {
-    marginLeft: 10,
   },
   linkContainer: {
     flexDirection: "row",
@@ -271,25 +211,6 @@ const styles = StyleSheet.create({
   linkHighlight: {
     color: "#007bff",
     fontWeight: "bold",
-  },
-  modalContainer: {
-    backgroundColor: "white",
-    padding: 20,
-    borderRadius: 15,
-  },
-  modalText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-    left: 110,
-  },
-  Texting: {
-    textShadowColor: "#A0A0A0",
-  },
-  checkImage: {
-    width: 100,
-    height: 100,
-    left: 100,
   },
 });
 

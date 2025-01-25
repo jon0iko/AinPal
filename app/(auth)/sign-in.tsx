@@ -11,7 +11,7 @@ import { Link, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
 import InputField from "@/components/InputField";
 import { useSignIn } from "@clerk/clerk-expo";
-import Icon from "react-native-vector-icons/FontAwesome";
+import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
 import OAuth from "@/components/OAuth";
 
 const SignIn = () => {
@@ -44,60 +44,69 @@ const SignIn = () => {
   }, [isLoaded, form]);
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.animationContainer}>
-        <Text style={styles.headerText}>Welcome 👋</Text>
-      </View>
+    <LinearGradient
+      colors={["#304352", "#d7d2cc"]} // Gradient colors
+      style={styles.gradientBackground}
+    >
+      <ScrollView style={styles.container}>
+        <View style={styles.animationContainer}>
+          <Text style={styles.headerText}>Welcome 👋</Text>
+        </View>
 
-      <View style={styles.inputContainer}>
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>Email</Text>
-          <InputField
-            placeholder="Enter your email"
-            value={form.email}
-            onChangeText={(value: any) => setForm({ ...form, email: value })}
+        <View style={styles.inputContainer}>
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Email</Text>
+            <InputField
+              placeholder="Enter your email"
+              value={form.email}
+              onChangeText={(value: any) => setForm({ ...form, email: value })}
+            />
+          </View>
+
+          <View style={styles.fieldContainer}>
+            <Text style={styles.fieldLabel}>Password</Text>
+            <InputField
+              placeholder="Enter your password"
+              value={form.password}
+              secureTextEntry
+              onChangeText={(value: any) =>
+                setForm({ ...form, password: value })
+              }
+            />
+          </View>
+
+          <CustomButton
+            title="Sign In"
+            onPress={onSignInPress}
+            style={styles.signUpButton}
           />
-        </View>
 
-        <View style={styles.fieldContainer}>
-          <Text style={styles.fieldLabel}>Password</Text>
-          <InputField
-            placeholder="Enter your password"
-            value={form.password}
-            secureTextEntry
-            onChangeText={(value: any) => setForm({ ...form, password: value })}
-          />
-        </View>
+          <OAuth />
+          {/* Forgot Password Navigation */}
+          <View style={styles.linkContainer}>
+            <Link href="/(auth)/forgotPassword" style={styles.linkHighlight}>
+              Forgot Password?
+            </Link>
+          </View>
 
-        <CustomButton
-          title="Sign In"
-          onPress={onSignInPress}
-          style={styles.signUpButton}
-        />
-
-        <OAuth/>
-        {/* Forgot Password Navigation */}
-        <View style={styles.linkContainer}>
-          <Link href="/(auth)/forgotPassword" style={styles.linkHighlight}>
-            Forgot Password?
-          </Link>
+          <View style={styles.linkContainer}>
+            <Text style={styles.linkText}>Don't have an account? </Text>
+            <Link href="/(root)/signUp" style={styles.linkSignUp}>
+              Sign Up
+            </Link>
+          </View>
         </View>
-
-        <View style={styles.linkContainer}>
-          <Text style={styles.linkText}>Don't have an account? </Text>
-          <Link href="/(root)/signUp" style={styles.linkSignUp}>
-            Sign Up
-          </Link>
-        </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#fff",
   },
   animationContainer: {
     alignItems: "center",
@@ -107,7 +116,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#333",
+    color: "#fff", // Adjusted for visibility
   },
   inputContainer: {
     padding: 20,
@@ -118,12 +127,7 @@ const styles = StyleSheet.create({
   fieldLabel: {
     fontSize: 16,
     marginBottom: 5,
-  },
-  inputField: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 10,
-    padding: 10,
+    color: "#fff", // Adjusted for visibility
   },
   signUpButton: {
     marginTop: 20,
@@ -131,34 +135,20 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 50,
   },
-  googleButton: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
-    marginTop: 15,
-    padding: 12,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 30,
-  },
-  googleButtonText: {
-    marginLeft: 10,
-  },
   linkContainer: {
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 15,
   },
   linkText: {
-    color: "#333",
+    color: "#fff", // Adjusted for visibility
   },
   linkHighlight: {
-    color: "#007bff",
+    color: "#007bff", // Highlight color for better contrast
     fontWeight: "bold",
-    left: 0,
   },
   linkSignUp: {
-    color: "#007bff",
+    color: "#007bff", // Highlight color for better contrast
     fontWeight: "bold",
   },
 });

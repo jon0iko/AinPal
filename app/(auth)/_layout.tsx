@@ -2,11 +2,11 @@ import { Stack } from "expo-router";
 
 const Layout = () => {
     return (
-        <Stack>
+      <Stack>
         <Stack.Screen name="welcome" options={{ headerShown: false }} />
         <Stack.Screen name="forgotPassword" options={{ headerShown: false }} />
         <Stack.Screen name="sign-in" options={{ headerShown: false }} />
-        </Stack>
+      </Stack>
     );
 }
 
