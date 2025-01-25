@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigation } from "@react-navigation/native";
 import {
   StyleSheet,
   Text,
@@ -6,7 +7,10 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Linking,
 } from "react-native";
+import { router } from "expo-router";
+
 
 export default function ContactUs() {
   const [name, setName] = useState("");
@@ -18,8 +22,14 @@ export default function ContactUs() {
       Alert.alert("Error", "Please fill out all fields.");
       return;
     }
-    Alert.alert("Success", "Your message has been sent!");
-    // Add your logic for handling the form submission here
+    Alert.alert("Success", "Your message has been sent!", [
+      {
+        text: "OK",
+        // onPress: () => navigation.navigate("Home"), // Navigate to Home page
+       onPress: () => router.push("/home"),
+      }
+    ]);
+    
   };
 
   return (

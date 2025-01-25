@@ -195,7 +195,7 @@ const styles = StyleSheet.create({
     marginBottom: 5,
   },
   signUpButton: {
-    marginTop: 20,
+    marginTop: 12,
     backgroundColor: "#007bff",
     padding: 15,
     borderRadius: 50,
@@ -211,6 +211,8 @@ const styles = StyleSheet.create({
   linkHighlight: {
     color: "#007bff",
     fontWeight: "bold",
+    marginTop: 5,
+    padding: 15,
   },
 });
 

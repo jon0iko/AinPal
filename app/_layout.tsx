@@ -42,15 +42,14 @@ export default function RootLayout() {
     <ClerkProvider publishableKey={publishableKey}>
       <ClerkLoaded>
         <Stack>
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)" options={{ headerShown: false }} />
+          <Stack.Screen name="(screens)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-            <Stack.Screen name="(root)" options={{ headerShown: false }} />
-            <Stack.Screen name="(screens)" options={{ headerShown: false }} />
-            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
 
-            {/* +not-found for Unrecognized Routes */}
-            <Stack.Screen name="+not-found" />
+          <Stack.Screen name="+not-found" />
         </Stack>
       </ClerkLoaded>
     </ClerkProvider>
