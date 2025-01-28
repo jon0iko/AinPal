@@ -99,6 +99,7 @@ const SignUp = () => {
               onChangeText={(value: string) =>
                 setForm({ ...form, name: value })
               }
+              style={styles.containerField}
             />
           </View>
 
@@ -110,6 +111,7 @@ const SignUp = () => {
               onChangeText={(value: string) =>
                 setForm({ ...form, email: value })
               }
+              style={styles.containerField}
             />
           </View>
 
@@ -122,6 +124,7 @@ const SignUp = () => {
               onChangeText={(value: string) =>
                 setForm({ ...form, password: value })
               }
+              style={styles.containerField}
             />
           </View>
 
@@ -273,6 +276,12 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     left: 100,
+  },
+  containerField: {
+    backgroundColor: "#f0f8ff", // Changed color
+    borderRadius: 50,
+    padding: 14,
+    color: "#000",
   },
 });
 
