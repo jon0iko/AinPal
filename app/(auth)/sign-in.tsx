@@ -45,7 +45,7 @@ const SignIn = () => {
 
   return (
     <LinearGradient
-      colors={["#304352", "#d7d2cc"]} // Gradient colors
+      colors={["#a7c7e7", "#6a77cc"]} // Gradient colors
       style={styles.gradientBackground}
     >
       <ScrollView style={styles.container}>
@@ -59,7 +59,9 @@ const SignIn = () => {
             <InputField
               placeholder="Enter your email"
               value={form.email}
-              onChangeText={(value: any) => setForm({ ...form, email: value })}
+              onChangeText={(value: any) => setForm({ ...form, email: value })
+            }
+              style={styles.inputField}
             />
           </View>
 
@@ -72,6 +74,7 @@ const SignIn = () => {
               onChangeText={(value: any) =>
                 setForm({ ...form, password: value })
               }
+              style={styles.inputField}
             />
           </View>
 
@@ -116,7 +119,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "800",
-    color: "#fff", // Adjusted for visibility
+    color: "#333", // Adjusted for visibility
   },
   inputContainer: {
     padding: 20,
@@ -127,11 +130,11 @@ const styles = StyleSheet.create({
   fieldLabel: {
     fontSize: 16,
     marginBottom: 5,
-    color: "#fff", // Adjusted for visibility
+    color: "#333", // Adjusted for visibility
   },
   signUpButton: {
     marginTop: 20,
-    backgroundColor: "#007bff",
+    backgroundColor: "#3d76b3",
     padding: 15,
     borderRadius: 50,
   },
@@ -141,15 +144,21 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   linkText: {
-    color: "#fff", // Adjusted for visibility
+    color: "#333", // Adjusted for visibility
   },
   linkHighlight: {
-    color: "#007bff", // Highlight color for better contrast
+    color: "white", // Highlight color for better contrast
     fontWeight: "bold",
   },
   linkSignUp: {
-    color: "#007bff", // Highlight color for better contrast
+    color: "white", // Highlight color for better contrast
     fontWeight: "bold",
+  },
+  inputField: {
+    backgroundColor: "#f0f8ff", // Changed color
+    borderRadius: 50,
+    padding: 12,
+    color: "#000",
   },
 });
 

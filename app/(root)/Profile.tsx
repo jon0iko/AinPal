@@ -59,7 +59,7 @@ const Profile = () => {
 
   return (
     <LinearGradient
-      colors={["#304362", "#d7d2cc"]}
+      colors={["#a7c7e7", "#6a77cc"]}
       style={styles.gradientBackground}
     >
       <SafeAreaView style={styles.container}>
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontWeight: "bold",
     marginVertical: 20,
-    color: "white",
+    color: "black",
   },
   imageContainer: {
     alignItems: "center",

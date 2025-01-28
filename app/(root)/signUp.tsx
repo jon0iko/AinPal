@@ -8,16 +8,13 @@ import {
   Image,
   Alert,
 } from "react-native";
-import LottieView from "lottie-react-native";
-import { LinearGradient } from "expo-linear-gradient"; // Import LinearGradient
-import { animations } from "@/contants";
 import InputField from "@/components/InputField";
 import { Link, router } from "expo-router";
 import CustomButton from "@/components/CustomButton";
+import { useSignUp } from "@clerk/clerk-expo";
 import ReactNativeModal from "react-native-modal";
 import OAuth from "@/components/OAuth";
-import { useSignUp } from "@clerk/clerk-expo";
-
+import { LinearGradient } from "expo-linear-gradient";
 const SignUp = () => {
   const { isLoaded, signUp, setActive } = useSignUp();
   const [showSuccessModel, setShowSuccessModel] = useState(false);
@@ -28,20 +25,12 @@ const SignUp = () => {
   });
 
   const [verification, setVerification] = useState({
-    state: "default",
+    state: "default", // Adjusted to include a "default" state
     error: "",
     code: "",
   });
 
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-
-  const animation = useRef<LottieView>(null);
-
-  useEffect(() => {
-    animation.current?.play();
-  }, []);
-
-  const accountAnimation = animations.find((item) => item.id === 4);
 
   const onSignUpPress = async () => {
     if (!isLoaded) return;
@@ -56,7 +45,12 @@ const SignUp = () => {
           strategy: "email_code",
         }
       );
-      setVerification({ ...verification, state: "pending" });
+      console.log("Verification Response:", verificationResponse);
+
+      setVerification({
+        ...verification,
+        state: "pending",
+      });
     } catch (err: any) {
       Alert.alert("Error", err.errors[0].longMessage);
     }
@@ -91,23 +85,11 @@ const SignUp = () => {
 
   return (
     <LinearGradient
-      colors={["#304362", "#d7d2cc"]} // Gradient colors
-      start={{ x: 0, y: 0 }} // Start of the gradient
-      end={{ x: 1, y: 1 }} // End of the gradient
-      style={styles.gradient}
+      colors={["#a7c7e7", "#6a77cc"]}
+      style={styles.gradientBackground}
     >
       <ScrollView style={styles.container}>
-        <View style={styles.animationContainer}>
-          <LottieView
-            autoPlay
-            loop
-            ref={animation}
-            style={styles.animation}
-            source={accountAnimation?.animation}
-          />
-          <Text style={styles.headerText}>Create Your Account</Text>
-        </View>
-
+        <Text style={styles.headerText}>Create Your Account</Text>
         <View style={styles.inputContainer}>
           <View style={styles.fieldContainer}>
             <Text style={styles.fieldLabel}>Name</Text>
@@ -156,6 +138,56 @@ const SignUp = () => {
               <Text style={styles.linkHighlight}>Log In</Text>
             </Link>
           </View>
+
+          <ReactNativeModal
+            isVisible={verification.state === "pending"}
+            onModalHide={() => {
+              if (verification.state === "success") setShowSuccessModal(true);
+            }}
+          >
+            <View style={styles.modalContainer}>
+              <Text style={styles.modalText}>Verification</Text>
+              <Text>
+                We've sent a verification code to {form.email}. Please enter it
+                below.
+              </Text>
+              <View style={{ marginBottom: 25 }}>
+                <InputField
+                  placeholder="Enter code"
+                  value={verification.code}
+                  keyboardType="numeric"
+                  onChangeText={(code: any) =>
+                    setVerification({ ...verification, code })
+                  }
+                />
+              </View>
+              {verification.error && (
+                <Text style={{ color: "red" }}>{verification.error}</Text>
+              )}
+              <CustomButton title="Verify Email" onPress={onPressVerify} />
+            </View>
+          </ReactNativeModal>
+
+          <ReactNativeModal isVisible={showSuccessModal}>
+            <View style={styles.modalContainer}>
+              <Image
+                source={require("../../assets/images/check.png")}
+                style={styles.checkImage}
+              />
+              <Text style={styles.modalText}>Verified</Text>
+              <Text style={styles.Texting}>
+                You have successfully verified your account.
+              </Text>
+              <CustomButton
+                title="Go to Home"
+                onPress={() => {
+                  setShowSuccessModal(false);
+                  router.push("/home");
+                }}
+                style={{ marginTop: 20 }}
+              />
+            </View>
+          </ReactNativeModal>
         </View>
       </ScrollView>
     </LinearGradient>
@@ -163,26 +195,18 @@ const SignUp = () => {
 };
 
 const styles = StyleSheet.create({
-  gradient: {
+  gradientBackground: {
     flex: 1,
   },
   container: {
     flex: 1,
-    padding: 20,
-  },
-  animationContainer: {
-    alignItems: "center",
-    justifyContent: "center",
-    paddingVertical: 20,
-  },
-  animation: {
-    width: 200,
-    height: 200,
+    // backgroundColor: "#fff",
   },
   headerText: {
     fontSize: 24,
     fontWeight: "800",
     color: "#333",
+    alignSelf: "center",
   },
   inputContainer: {
     padding: 20,
@@ -194,11 +218,30 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
   },
+  inputField: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    padding: 10,
+  },
   signUpButton: {
-    marginTop: 12,
-    backgroundColor: "#007bff",
+    marginTop: 20,
+    backgroundColor: "#3d76b3",
     padding: 15,
     borderRadius: 50,
+  },
+  googleButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 15,
+    padding: 12,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 30,
+  },
+  googleButtonText: {
+    marginLeft: 10,
   },
   linkContainer: {
     flexDirection: "row",
@@ -209,10 +252,27 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   linkHighlight: {
-    color: "#007bff",
+    color: "white",
     fontWeight: "bold",
-    marginTop: 5,
-    padding: 15,
+  },
+  modalContainer: {
+    backgroundColor: "white",
+    padding: 20,
+    borderRadius: 15,
+  },
+  modalText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+    left: 110,
+  },
+  Texting: {
+    textShadowColor: "#A0A0A0",
+  },
+  checkImage: {
+    width: 100,
+    height: 100,
+    left: 100,
   },
 });
 

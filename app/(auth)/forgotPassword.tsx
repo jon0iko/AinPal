@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TextInput, Alert } from "react-native";
 import CustomButton from "@/components/CustomButton"; // Use your custom button component
 import { router } from "expo-router";
+import { LinearGradient } from "expo-linear-gradient";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -15,26 +16,39 @@ const ForgotPassword = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.headerText}>Forgot Password</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Enter your email"
-        value={email}
-        onChangeText={setEmail}
-      />
-      <CustomButton title="Send Reset Link" onPress={handleReset} />
+    <LinearGradient
+      colors={["#a7c7e7", "#6a77cc"]} // Gradient colors
+      style={styles.gradientBackground}
+    >
+      <View style={styles.container}>
+        <Text style={styles.headerText}>Forgot Password</Text>
+        <TextInput
+          placeholder="Enter your email"
+          value={email}
+          onChangeText={setEmail}
+          style={styles.inputField}
+        />
 
-      <CustomButton
-        title="Back to Sign In"
-        onPress={() => router.push("../sign-in")}
-        style={{ marginTop: 20 }}
-      />
-    </View>
+        <CustomButton
+          title="Send Reset Link"
+          onPress={handleReset}
+          style={styles.resetButton}
+        />
+
+        <CustomButton
+          title="Back to Sign In"
+          onPress={() => router.push("../sign-in")}
+          style={styles.resetButton}
+        />
+      </View>
+    </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    flex: 1,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -51,6 +65,23 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ccc",
     borderRadius: 5,
+    marginBottom: 20,
+  },
+  inputField: {
+    backgroundColor: "#f0f8ff", // Changed color
+    borderRadius: 50,
+    padding: 12,
+    color: "#000",
+    width: "100%", // Adjust this to control the width of the input field
+    maxWidth: 600,
+    marginBottom: 20,
+  },
+  resetButton: {
+    backgroundColor: "#3d76b3", // Green color for reset button
+    padding: 12,
+    borderRadius: 50,
+    width: "100%",
+    maxWidth: 400,
     marginBottom: 20,
   },
 });
