@@ -8,16 +8,14 @@ import {
   TouchableOpacity,
   Linking,
 } from "react-native";
-import Markdown from "react-native-markdown-display";
-import {
-  fetchSectionDetails,
-  fetchFootnotes as fetchSectionFootnotes,
-} from "../../api/sectionDetails";
+import RenderHTML from "react-native-render-html";
+import { fetchSectionDetails, fetchFootnotes as fetchSectionFootnotes } from "../../api/sectionDetails";
 import { fetchLawDisplayinfo } from "@/api/lawDetails";
 import { useNavigation } from "@react-navigation/native";
 import { useSearchParams } from "expo-router/build/hooks";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import { useWindowDimensions } from "react-native";
 import { useRouter } from "expo-router";
 
 interface SectionTextProps {
@@ -40,7 +38,8 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
   } | null>(null);
   const [footnotes, setFootnotes] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
-  const router = useRouter();
+  const { width } = useWindowDimensions();
+   const router = useRouter();
 
   useEffect(() => {
     const getSectionDetails = async () => {
@@ -48,27 +47,17 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
         const data = await fetchSectionDetails(sectionKey);
         setSectionDetails(data);
 
-        // Extract footnote numbers from text
-        const footnoteMatches =
-          data.markdown_text.match(/\{\{footnote:(\d+)\}\}/g) || [];
-        const footnoteNumbers = footnoteMatches
-          .map((match:any) => match.match(/\d+/)?.[0])
-          .filter(Boolean);
-
-        // convert footnote numbers to string
-        footnoteNumbers.map((num:any) => num.toString());
+        const footnoteMatches = data.markdown_text.match(/\{\{footnote:(\d+)\}\}/g) || [];
+        const footnoteNumbers = footnoteMatches.map((match:any) => match.match(/\d+/)?.[0]).filter(Boolean);
 
         if (footnoteNumbers.length > 0) {
-          const fetchedFootnotes = await fetchSectionFootnotes(
-            data.parent_law_id,
-            footnoteNumbers
-          );
+          const fetchedFootnotes = await fetchSectionFootnotes(data.parent_law_id, footnoteNumbers);
           const footnoteMap = fetchedFootnotes.reduce(
             (map: Record<string, string>, { number, text }: { number: string; text: string }) => {
               map[number] = text;
               return map;
             },
-            {} as Record<string, string>
+            {}
           );
           setFootnotes(footnoteMap);
         }
@@ -82,24 +71,10 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
     getSectionDetails();
   }, [sectionKey]);
 
-  const renderMarkdown = (markdown: string) => {
-    const processedMarkdown = markdown.replace(
-      /\{\{footnote:(\d+)\}\}/g,
-      (_, footnoteId) => `*[${footnoteId}]*` // Bracketed number syntax
-    );
-
-    const processedInterlinks = processedMarkdown.replace(
-      /\[(.*?)\]\(\/law:\/\/(\d+)\)/g,
-      (_, text, lawId) => `[${text}](law://${lawId})`
-    );
-  // console.log(processedInterlinks);
-  
-  return processedInterlinks;
-  };
-
-  const handleLinkPress = (url: string): boolean => {
-    if (url.startsWith("law://")) {
-      const lawId = url.replace("law://", "");
+  const handleLinkPress = (event:any, href:any): boolean => {
+    href.toString();
+    if (href.startsWith("law://")) {
+      const lawId = href.replace("law://", "");
 
       fetchLawDisplayinfo(lawId)
         .then(({ title, hasChapters }) => {
@@ -112,18 +87,40 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
             },
           });
         })
-        .catch((error) =>
-          console.error("Error fetching law details for navigation:", error)
-        );
+        .catch((error) => console.error("Error fetching law details for navigation:", error));
 
       return true;
     } else {
-      Linking.openURL(url).catch((err) =>
+      Linking.openURL(href).catch((err) =>
         console.error("Error opening external link:", err)
       );
 
       return true;
     }
+  };
+
+  const renderersProps = {
+    a: {
+      onPress: handleLinkPress,
+    },
+  };
+
+  const generateHTML = (html: string): string => {
+     if (!html) {
+       return ""; // Return an empty string if `html` is undefined or null
+     }
+    const processedMarkdown = html
+      .replace(
+        /\{\{footnote:(\d+)\}\}/g,
+        (_, footnoteId) =>
+          `<sup id="footnote-${footnoteId}">${footnoteId}</sup>`
+      )
+      .replace(
+        /\[([^\[\]]*?)\]\(\/law:\/\/(\d+)\)/g,
+        (_, text, lawId) => `<a href="law://${lawId}">${text}</a>`
+      )
+      .replace(/\n/g, "<br>"); // Replace newlines with <br> tags
+    return processedMarkdown;
   };
 
   if (loading) {
@@ -142,9 +139,12 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
     );
   }
 
+  const htmlContent = generateHTML(sectionDetails.markdown_text);
+
   return (
-    <View style={styles.pageContainer}>
-      {/* Back Button */}
+    <View
+      style={styles.pageContainer}
+    >
       <TouchableOpacity
         style={styles.backButton}
         onPress={() => navigation.goBack()}
@@ -152,8 +152,10 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
         <Ionicons name="arrow-back" size={28} color="#003F7D" />
       </TouchableOpacity>
 
-      {/* Content */}
-      <ScrollView style={styles.container}>
+      <ScrollView
+        style={styles.container}
+        contentContainerStyle={styles.scrollContent}
+      >
         <LinearGradient
           colors={["#6f9ec9", "#003F7D"]}
           start={{ x: 0, y: 0 }}
@@ -166,21 +168,17 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
           <Text style={styles.headline}>{sectionDetails.headline}</Text>
         </LinearGradient>
 
-        {/* Render Markdown */}
-        <Markdown
-          style={{
+        <RenderHTML
+          contentWidth={width}
+          source={{ html: htmlContent }}
+          tagsStyles={{
             body: styles.body,
-            heading1: styles.heading1,
-            link: styles.link,
-            bullet_list: styles.bullet_list,
-            list_item: styles.list_item,
+            sup: styles.sup,
+            a: styles.link,
           }}
-          onLinkPress={(url) => handleLinkPress(url)}
-        >
-          {renderMarkdown(sectionDetails.markdown_text)}
-        </Markdown>
+          renderersProps={renderersProps}
+        />
 
-        {/* Footnotes */}
         {Object.keys(footnotes).length > 0 && (
           <View style={styles.footnotesContainer}>
             <Text style={styles.footnotesTitle}>Footnotes:</Text>
@@ -198,6 +196,7 @@ const SectionText: React.FC<SectionTextProps> = ({ route }) => {
 
 
 
+
 const styles = StyleSheet.create({
   pageContainer: {
     flex: 1,
@@ -205,8 +204,11 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    padding: 20,
-    marginBottom: 16,
+    paddingHorizontal: 20, // Horizontal padding for consistent spacing
+    marginBottom: 0,
+  },
+  scrollContent: {
+    paddingBottom: 40, // Ensure extra space at the bottom for safe scrolling
   },
   headerContainer: {
     borderRadius: 8,
@@ -292,7 +294,6 @@ const styles = StyleSheet.create({
   sup: {
     fontSize: 12, // Smaller font size for superscripts
     lineHeight: 18,
-    verticalAlign: "top", // Align text to the top
   },
 });
 
