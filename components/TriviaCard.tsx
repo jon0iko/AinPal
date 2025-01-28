@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
-import triviaData from "@/app/utils/Trivia_data"
+import triviaData from "@/app/utils/Trivia_data";
 
-const TriviaCard = () => {
+const TriviaCard = ({ refreshTrigger }: { refreshTrigger: number }) => {
   const [trivia, setTrivia] = useState<string | null>(null);
 
   useEffect(() => {
-    // Select a random trivia entry
+    // Select a random trivia entry whenever refreshTrigger changes
     const randomIndex = Math.floor(Math.random() * triviaData.length);
     setTrivia(triviaData[randomIndex]?.text || "No trivia found.");
-  }, []);
+  }, [refreshTrigger]);
 
   return (
     <LinearGradient
