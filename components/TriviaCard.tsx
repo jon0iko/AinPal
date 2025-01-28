@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
+import triviaData from "@/app/utils/Trivia_data"
 
 const TriviaCard = () => {
+  const [trivia, setTrivia] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Select a random trivia entry
+    const randomIndex = Math.floor(Math.random() * triviaData.length);
+    setTrivia(triviaData[randomIndex]?.text || "No trivia found.");
+  }, []);
+
   return (
     <LinearGradient
-      colors={["#C9CCFF", "#7A89FF"]} // Darker gradient using darker primary shades
+      colors={["#C9CCFF", "#7A89FF"]} // Gradient colors
       style={styles.cardContainer}
     >
       <View style={styles.iconContainer}>
@@ -14,19 +23,15 @@ const TriviaCard = () => {
       </View>
       <View style={styles.textContainer}>
         <Text style={styles.title}>Did You Know?</Text>
-        <Text style={styles.info}>
-          The Bangladesh Labour Act, 2006 guarantees maternity leave of 16 weeks
-          (8 weeks before and 8 weeks after delivery) for working women.
-        </Text>
+        <Text style={styles.info}>{trivia}</Text>
       </View>
     </LinearGradient>
   );
 };
 
 const styles = StyleSheet.create({
-  
   cardContainer: {
-    marginTop:45,
+    marginTop: 45,
     margin: 16,
     borderRadius: 16,
     padding: 16,
@@ -47,12 +52,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 22,
     fontWeight: "bold",
-    color: "#1A4B8C", // Specified blue color
+    color: "#1A4B8C",
     marginBottom: 8,
   },
   info: {
     fontSize: 15,
-    color: "#343A30", // Neutral-500
+    color: "#343A30",
     lineHeight: 28,
   },
 });
