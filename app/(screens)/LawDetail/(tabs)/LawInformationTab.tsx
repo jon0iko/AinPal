@@ -21,6 +21,12 @@ const LawInformationTab: React.FC<LawInformationTabProps> = ({ lawId }) => {
     const fetchDetails = async () => {
       try {
         const data = await fetchLawInfo(lawId); // Call the API function
+        if (data.description) {
+          data.description = data.description.replace(
+            /\{\{footnote:\d+\}\}/g,
+            ""
+          );
+        }
         setLawDetails(data);
       } catch (error) {
         console.error("Error fetching law details:", error);
@@ -65,12 +71,12 @@ const LawInformationTab: React.FC<LawInformationTabProps> = ({ lawId }) => {
           </Text>
         </View>
       </View>
-        {lawDetails.description ? (
-            <>
-            <Text style={styles.sectionTitle}>Summary:</Text>
-            <Text style={styles.summary}>{lawDetails.description}</Text>
-            </>
-        ) : null}
+      {lawDetails.description ? (
+        <>
+          <Text style={styles.sectionTitle}>Summary:</Text>
+          <Text style={styles.summary}>{lawDetails.description}</Text>
+        </>
+      ) : null}
     </View>
   );
 };

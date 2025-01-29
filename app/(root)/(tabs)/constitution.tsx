@@ -1,9 +1,13 @@
-import { View, Text } from 'react-native';
+import {
+    Text,
+} from "react-native";
 
-export default function TermsScreen() {
+import ConstitutionSections from "@/components/ConstitutionSections";
+
+
+export default function ConstitutionScreen() {
+
   return (
-    <View>
-      <Text> Constitution of Bangladesh will be displayed here</Text>
-    </View>
+    <ConstitutionSections />
   );
 }

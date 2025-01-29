@@ -38,3 +38,17 @@ export const fetchSections = async (lawId) => {
     return [];
   }
 };
+
+// Fetch Constitution Section lists
+export const fetchConstitutionSections = async () => {
+  try {
+    const response = await fetch(
+      process.env.EXPO_PUBLIC_API_URL + `/constitution/sections`
+    );
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching Constitution sections:", error);
+    return { groupedSections: {} }; // Prevents crashes if API fails
+  }
+};
