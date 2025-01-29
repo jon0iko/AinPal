@@ -17,6 +17,7 @@ interface Section {
   headline: string;
   chapter_number?: string;
   chapter_title?: string;
+  id: number;
 }
 
 interface GroupedSections {
@@ -34,6 +35,7 @@ interface SectionsTabProps {
 const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
   const [groupedSections, setGroupedSections] = useState<GroupedSections>({});
   const [search, setSearch] = useState("");
+  const [hasChapters, setHasChapters] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -88,7 +90,7 @@ const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
             )}
             <FlatList
               data={chapterData.sections}
-              keyExtractor={(section) => section.section_key}
+              keyExtractor={(section) => section.id}
               renderItem={({ item: section }) => (
                 <TouchableOpacity
                   style={styles.sectionItem}
