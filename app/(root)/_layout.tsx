@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BookmarkProvider } from "@/context/BookmarkContext";
 
 
+
 export default function DrawerLayout() {
   return (
     <BookmarkProvider>
@@ -13,6 +14,7 @@ export default function DrawerLayout() {
         <Drawer
           drawerContent={CustomDrawerContent}
           screenOptions={{
+            
             drawerActiveBackgroundColor: "#5363df", // Background color for active item
             drawerActiveTintColor: "#fff", // White text for active item
             drawerInactiveTintColor: "#fff", // White text for inactive items
