@@ -1,10 +1,9 @@
 import CustomDrawerContent from "@/components/CustomDrawerContent";
-import { useAuth } from "@clerk/clerk-react";
 import { Ionicons } from "@expo/vector-icons";
 import { Drawer } from "expo-router/drawer";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { BookmarkProvider } from "@/context/BookmarkContext";
-
+import { LinearGradient } from "expo-linear-gradient";
 
 
 export default function DrawerLayout() {
@@ -14,11 +13,10 @@ export default function DrawerLayout() {
         <Drawer
           drawerContent={CustomDrawerContent}
           screenOptions={{
-            
             drawerActiveBackgroundColor: "#5363df", // Background color for active item
             drawerActiveTintColor: "#fff", // White text for active item
             drawerInactiveTintColor: "#fff", // White text for inactive items
-            drawerHideStatusBarOnOpen: true,
+            drawerHideStatusBarOnOpen: false,
             drawerLabelStyle: {
               marginLeft: -8, // Adjust to control text position
               fontSize: 14, // Optional: Adjust text size
@@ -33,10 +31,13 @@ export default function DrawerLayout() {
             name="(tabs)"
             options={{
               drawerLabel: "Home",
-              headerTitle: "Home",
+              //get the tab name from the screen name
+              headerTitle: "",
               drawerIcon: ({ size, color }) => (
                 <Ionicons name="home-outline" size={size} color={color} />
               ),
+              headerTransparent: false,
+              headerStatusBarHeight: -30
             }}
           />
 

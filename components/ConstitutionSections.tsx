@@ -10,6 +10,7 @@ import {
 import { fetchConstitutionSections } from "@/api/lawDetails";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons"; // Ensure this is installed
+import { Stack } from "expo-router";
 
 interface Section {
   section_key: string;
@@ -79,70 +80,77 @@ const ConstitutionSections: React.FC = () => {
   );
 
   return (
-    <View style={styles.container}>
-      {/* Styled Search Bar */}
-      <View style={styles.searchBarContainer}>
-        <Ionicons name="search" size={20} color="#6C757D" style={styles.icon} />
-        <TextInput
-          style={styles.searchBar}
-          placeholder="Search sections"
-          placeholderTextColor="#6C757D"
-          value={search}
-          onChangeText={setSearch}
+    <>
+      <View style={styles.container}>
+        {/* Styled Search Bar */}
+        <View style={styles.searchBarContainer}>
+          <Ionicons
+            name="search"
+            size={20}
+            color="#6C757D"
+            style={styles.icon}
+          />
+          <TextInput
+            style={styles.searchBar}
+            placeholder="Search sections"
+            placeholderTextColor="#6C757D"
+            value={search}
+            onChangeText={setSearch}
+          />
+        </View>
+
+        {/* Sections List */}
+        <FlatList
+          data={Object.entries(filteredGroupedSections)}
+          keyExtractor={([partKey]) => partKey}
+          renderItem={({ item: [partKey, partData] }) => (
+            <View style={styles.partContainer}>
+              <Text style={styles.partTitle}>
+                {partKey}: {partData.part_title}
+              </Text>
+              <FlatList
+                data={Object.entries(partData.chapters)}
+                keyExtractor={([chapterKey]) => chapterKey}
+                renderItem={({ item: [chapterKey, chapterData] }) => (
+                  <View style={styles.chapterContainer}>
+                    {chapterKey !== "No Chapter" && (
+                      <Text style={styles.chapterTitle}>
+                        {chapterKey}: {chapterData.chapter_title}
+                      </Text>
+                    )}
+                    <FlatList
+                      data={chapterData.sections}
+                      keyExtractor={(section) => section.id.toString()}
+                      renderItem={({ item: section }) => (
+                        <TouchableOpacity
+                          style={styles.sectionItem}
+                          onPress={() => {
+                            router.push({
+                              pathname: "/(screens)/SectionText",
+                              params: {
+                                sectionKey: section.section_key,
+                                lawId: 367,
+                              },
+                            });
+                          }}
+                        >
+                          <Text style={styles.sectionNumber}>
+                            Section {section.section_number}.
+                          </Text>
+                          <Text style={styles.sectionHeadline}>
+                            {section.headline}
+                          </Text>
+                        </TouchableOpacity>
+                      )}
+                    />
+                  </View>
+                )}
+              />
+            </View>
+          )}
         />
       </View>
-
-      {/* Sections List */}
-      <FlatList
-        data={Object.entries(filteredGroupedSections)}
-        keyExtractor={([partKey]) => partKey}
-        renderItem={({ item: [partKey, partData] }) => (
-          <View style={styles.partContainer}>
-            <Text style={styles.partTitle}>
-              {partKey}: {partData.part_title}
-            </Text>
-            <FlatList
-              data={Object.entries(partData.chapters)}
-              keyExtractor={([chapterKey]) => chapterKey}
-              renderItem={({ item: [chapterKey, chapterData] }) => (
-                <View style={styles.chapterContainer}>
-                  {chapterKey !== "No Chapter" && (
-                    <Text style={styles.chapterTitle}>
-                      {chapterKey}: {chapterData.chapter_title}
-                    </Text>
-                  )}
-                  <FlatList
-                    data={chapterData.sections}
-                    keyExtractor={(section) => section.id.toString()}
-                    renderItem={({ item: section }) => (
-                      <TouchableOpacity
-                        style={styles.sectionItem}
-                        onPress={() => {
-                          router.push({
-                            pathname: "/(screens)/SectionText",
-                            params: {
-                              sectionKey: section.section_key,
-                              lawId: 367,
-                            },
-                          });
-                        }}
-                      >
-                        <Text style={styles.sectionNumber}>
-                          Section {section.section_number}.
-                        </Text>
-                        <Text style={styles.sectionHeadline}>
-                          {section.headline}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  />
-                </View>
-              )}
-            />
-          </View>
-        )}
-      />
-    </View>
+    </>
   );
 };
 

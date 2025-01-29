@@ -34,7 +34,8 @@ export default function TabsLayout() {
         <Tabs.Screen
           name="constitution"
           options={{
-            headerShown: false,
+            headerTitle:
+              "The Constitution of Bangladesh",
             tabBarIcon: ({ focused }) => (
               <View style={styles.iconContainer}>
                 <Ionicons
@@ -130,7 +131,7 @@ const styles = StyleSheet.create({
   },
  chatbotButton: {
   position: "absolute",
-  bottom: 30, // Adjust as needed to make it float above the tab bar
+  bottom: 20, // Adjust as needed to make it float above the tab bar
   left: "50%", // Center horizontally
   transform: [{ translateX: -30 }], // Shift left by half the button's width (e.g., 60px wide)
   backgroundColor: "#1A4B8C",
