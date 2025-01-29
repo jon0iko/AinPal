@@ -2,14 +2,14 @@ import React, { useEffect } from "react";
 import { Redirect, useRouter } from "expo-router"; 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import "react-native-gesture-handler";
-import { useAuth } from "@clerk/clerk-expo";
+// import { useAuth } from "@clerk/clerk-expo";
 
 export default function Index() {
-  const { isSignedIn } = useAuth();
+  // const { isSignedIn } = useAuth();
   const router = useRouter(); 
-  if (isSignedIn) {
-    return <Redirect href={"/(root)/(tabs)/home"} />;
-  }
+  // if (isSignedIn) {
+  //   return <Redirect href={"/(root)/(tabs)/home"} />;
+  // }
 
   useEffect(() => {
     const resetOnboarding = async () => {
