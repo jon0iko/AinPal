@@ -30,12 +30,16 @@ export default function CustomDrawerContent(props: any) {
         console.log("dismissed");
       }
     } catch (error) {
-      console.log(error.message);
+      if (error instanceof Error) {
+        console.log(error.message);
+      } else {
+        console.log(String(error));
+      }
     }
   };
 
   return (
-    <LinearGradient colors={["#5363df", "#21256e"]} style={{ flex: 1 }}>
+    <LinearGradient colors={["#2a1f5d", "#4e68b0"]} style={{ flex: 1 }}>
       <DrawerContentScrollView
         {...props}
         scrollEnabled={false}
