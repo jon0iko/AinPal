@@ -59,6 +59,7 @@ export default function Home() {
               source={require("../../../assets/images/constitution.png")}
               className="w-11 h-11 mb-2"
             />
+            {/** Make sure that the word doesn't break and */}
             <Text className="text-sm text-[#2E5C99] text-center">
               Constitution
             </Text>
