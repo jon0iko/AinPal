@@ -8,17 +8,20 @@ import { useRouter } from "expo-router";
 import { View, Text, Image, Share } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { LinearGradient } from "expo-linear-gradient";
+import { useUser, useAuth } from "@clerk/clerk-expo";
+import React from "react";
 
 export default function CustomDrawerContent(props: any) {
   const { top, bottom } = useSafeAreaInsets();
-  const user = { isLoggedIn: true, name: "User" }; // Define the user object
+  const { user } = useUser();
+  const { signOut } = useAuth();
   const route = useRouter();
   const url = "https://github.com/jon0iko/AinPal";
 
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: "Bug Ninza: " + "\n" + url,
+        message: "AinPal: " + "\n" + url,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -38,6 +41,15 @@ export default function CustomDrawerContent(props: any) {
     }
   };
 
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      route.replace("/");
+    } catch (error) {
+      console.error("Error signing out:", error);
+    }
+  };
+
   return (
     <LinearGradient colors={["#2a1f5d", "#4e68b0"]} style={{ flex: 1 }}>
       <DrawerContentScrollView
@@ -47,8 +59,17 @@ export default function CustomDrawerContent(props: any) {
       >
         <View style={{ padding: 20 }}>
           <Image
-            source={require("../assets/images/user.png")}
-            style={{ width: 100, height: 100, alignSelf: "center" }}
+            source={
+              user?.imageUrl
+                ? { uri: user.imageUrl }
+                : require("../assets/images/user.png")
+            }
+            style={{
+              width: 100,
+              height: 100,
+              alignSelf: "center",
+              borderRadius: 50, // Make it circular
+            }}
           />
           <Text
             style={{
@@ -59,8 +80,9 @@ export default function CustomDrawerContent(props: any) {
               color: "#ffffff",
             }}
           >
-            {/* Display user's email if logged in, otherwise "User" */}
-            {user.isLoggedIn ? user.name : "User"}
+            {user?.firstName ||
+              user?.emailAddresses[0]?.emailAddress ||
+              "Guest"}
           </Text>
         </View>
 
@@ -83,7 +105,7 @@ export default function CustomDrawerContent(props: any) {
         <View style={{ padding: 10 }}>
           <DrawerItem
             label="Logout"
-            onPress={() => route.replace("/")}
+            onPress={handleLogout}
             labelStyle={{ color: "#ffffff" }}
           />
         </View>
