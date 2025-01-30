@@ -2,9 +2,12 @@ import { Tabs } from "expo-router";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { router } from "expo-router";
+import { BookmarkProvider } from "@/context/BookmarkContext";
 
 export default function TabsLayout() {
   return (
+    <BookmarkProvider>
+
     <View style={styles.container}>
       <Tabs
         screenOptions={{
@@ -106,6 +109,7 @@ export default function TabsLayout() {
         />
       </Tabs>
     </View>
+    </BookmarkProvider>
   );
 }
 

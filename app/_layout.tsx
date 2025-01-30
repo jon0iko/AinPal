@@ -5,7 +5,7 @@ import { useEffect } from "react";
 // import "react-native-reanimated";
 import "../global.css";
 import { ClerkProvider, ClerkLoaded } from "@clerk/clerk-expo";
-import { BookmarkProvider } from "@/context/BookmarkContext";
+
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 
@@ -44,10 +44,22 @@ export default function RootLayout() {
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="onboarding" options={{ headerShown: false }} />
-          <Stack.Screen name="(root)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="(root)/ContactUs"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(root)/Profile"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="(root)/Settings"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="(root)/signUp" options={{ headerShown: false }} />
+          <Stack.Screen name="(root)/(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="(screens)" options={{ headerShown: false }} />
           <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          
 
           <Stack.Screen name="+not-found" />
         </Stack>

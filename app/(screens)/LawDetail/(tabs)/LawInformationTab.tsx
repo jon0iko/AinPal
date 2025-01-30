@@ -108,11 +108,15 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
+    alignItems: "center",
     marginBottom: 24,
+    paddingVertical: 10, // Add vertical padding
+    borderBottomWidth: 1,
+    borderBottomColor: "#CED4DA", // Add a bottom border to separate rows
   },
   column: {
     flex: 1,
-    // marginHorizontal: 8,
+    marginHorizontal: 8, // Add space between columns
   },
   label: {
     fontSize: 18,
@@ -123,6 +127,7 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 16,
     color: "#333",
+    paddingTop: 4, // Add space between label and value
   },
   summary: {
     fontSize: 16,
