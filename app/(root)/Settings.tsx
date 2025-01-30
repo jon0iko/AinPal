@@ -9,6 +9,7 @@ import React, { useCallback, useContext, useEffect } from "react";
 import { regular } from "../utils/fonts";
 import { Card, Text } from "../utils/Theme";
 import DarkMode from "../utils/darkmode.context";
+import { LinearGradient } from "expo-linear-gradient";
 
 export default function Settings() {
   const { isDarkMode, setIsDarkMode, useDeviceSettings, setUseDeviceSettings } =
@@ -37,45 +38,53 @@ export default function Settings() {
   }, [isDarkMode, useDeviceSettings]);
 
   return (
-    <View>
-      <Card style={[styles.card]} isDarkMode={isDarkMode}>
-        <View style={styles.option}>
-          <Text style={[[styles.text]]} isDarkMode={isDarkMode}>
-            Use device theme
-          </Text>
-          <Switch
-            trackColor={{
-              true: "#02b875",
-              false: "gray",
-            }}
-            onChange={handleUseDeviceTheme}
-            value={useDeviceSettings}
-            thumbColor={"white"}
-          />
-        </View>
+    <LinearGradient
+      colors={["#a7c7e7", "#6a77cc"]} // Gradient colors
+      style={styles.gradientBackground}
+    >
+      <View>
+        <Card style={[styles.card]} isDarkMode={isDarkMode}>
+          <View style={styles.option}>
+            <Text style={[[styles.text]]} isDarkMode={isDarkMode}>
+              Use device theme
+            </Text>
+            <Switch
+              trackColor={{
+                true: "#02b875",
+                false: "gray",
+              }}
+              onChange={handleUseDeviceTheme}
+              value={useDeviceSettings}
+              thumbColor={"white"}
+            />
+          </View>
 
-        <View style={[styles.hr]} />
+          <View style={[styles.hr]} />
 
-        <View style={styles.option}>
-          <Text style={[[styles.text]]} isDarkMode={isDarkMode}>
-            Dark Mode
-          </Text>
-          <Switch
-            trackColor={{
-              true: "#02b875",
-              false: "gray",
-            }}
-            value={isDarkMode}
-            onChange={toggleDarkMode}
-            thumbColor={"white"}
-          />
-        </View>
-      </Card>
-    </View>
+          <View style={styles.option}>
+            <Text style={[[styles.text]]} isDarkMode={isDarkMode}>
+              Dark Mode
+            </Text>
+            <Switch
+              trackColor={{
+                true: "#02b875",
+                false: "gray",
+              }}
+              value={isDarkMode}
+              onChange={toggleDarkMode}
+              thumbColor={"white"}
+            />
+          </View>
+        </Card>
+      </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
+  gradientBackground: {
+    flex: 1,
+  },
   hr: {
     width: "100%",
     height: 1,
