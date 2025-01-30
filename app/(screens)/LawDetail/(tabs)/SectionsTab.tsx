@@ -35,12 +35,13 @@ interface SectionsTabProps {
 const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
   const [groupedSections, setGroupedSections] = useState<GroupedSections>({});
   const [search, setSearch] = useState("");
-  const [hasChapters, setHasChapters] = useState(false);
+  const [isRepealed, setIsRepealed] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
     const getSections = async () => {
       const data = await fetchSections(lawId);
+      setIsRepealed(data.isRepealed);
       setGroupedSections(data.groupedSections || {});
     };
 
@@ -62,6 +63,14 @@ const SectionsTab: React.FC<SectionsTabProps> = ({ lawId, hasChapter }) => {
     },
     {}
   );
+
+  if (isRepealed) {
+    return (
+      <View style={styles.container}>
+        <Text>This law has been repealed.</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>

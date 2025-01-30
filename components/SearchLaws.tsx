@@ -1,4 +1,13 @@
-import { View, TextInput, StyleSheet, TouchableOpacity, Modal, Text, FlatList } from "react-native";
+import {
+  View,
+  TextInput,
+  StyleSheet,
+  TouchableOpacity,
+  Modal,
+  Text,
+  FlatList,
+  Keyboard,
+} from "react-native";
 import React, { useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -8,25 +17,29 @@ interface SearchLawsProps {
 }
 
 const SearchLaws: React.FC<SearchLawsProps> = ({ search, setSearch }) => {
+  const [inputValue, setInputValue] = useState(search);
   const [filterVisible, setFilterVisible] = useState(false);
   const [selectedYear, setSelectedYear] = useState<string | null>(null);
 
   const handleSearchChange = (text: string) => {
-    setSearch(text);
+    setInputValue(text); // Update local state but don't update `setSearch` yet
   };
 
-  const handleSearchBlur = () => {
-    setSearch(search.trim());
+  const handleSearchSubmit = () => {
+    setSearch(inputValue.trim()); // Update search only when user submits
+    Keyboard.dismiss(); // Dismiss keyboard after submitting
   };
 
-  // Generate years from current year to the 1836
-  const years = Array.from({ length: new Date().getFullYear() - 1835 }, (_, i) => `${1836 + i}`).reverse();
-
+  // Generate years from current year to 1836
+  const years = Array.from(
+    { length: new Date().getFullYear() - 1835 },
+    (_, i) => `${1836 + i}`
+  ).reverse();
 
   const applyFilter = (year: string) => {
     setSelectedYear(year);
     setFilterVisible(false);
-    setSearch(`${search} ${year}`.trim());
+    setSearch(`${inputValue} ${year}`.trim()); // Update search with year
   };
 
   return (
@@ -37,11 +50,15 @@ const SearchLaws: React.FC<SearchLawsProps> = ({ search, setSearch }) => {
           style={styles.searchBar}
           placeholder="Search Acts"
           placeholderTextColor="#6C757D"
-          value={search}
+          value={inputValue}
           onChangeText={handleSearchChange}
-          onBlur={handleSearchBlur}
+          onSubmitEditing={handleSearchSubmit} // Updates `setSearch` only when user presses "Done"
+          returnKeyType="search" // Makes keyboard show "Search" instead of "Done"
         />
-        <TouchableOpacity style={styles.filterButton} onPress={() => setFilterVisible(true)}>
+        <TouchableOpacity
+          style={styles.filterButton}
+          onPress={() => setFilterVisible(true)}
+        >
           <Ionicons name="options" size={20} color="#6C757D" />
         </TouchableOpacity>
       </View>
@@ -84,16 +101,22 @@ const styles = StyleSheet.create({
   searchBarContainer: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "#A7C7E7",
+    backgroundColor: "#E8F0FE",
     borderRadius: 20,
     paddingHorizontal: 10,
     paddingVertical: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 3,
+    elevation: 2, // For Android shadow
   },
   searchBar: {
     flex: 1,
     fontSize: 16,
     fontFamily: "Jakarta",
     color: "#212529",
+    paddingVertical: 5,
   },
   icon: {
     marginRight: 10,
@@ -121,13 +144,15 @@ const styles = StyleSheet.create({
     fontFamily: "JakartaBold",
     marginBottom: 10,
     textAlign: "center",
+    color: "#333",
   },
   yearItem: {
-    paddingVertical: 10,
+    paddingVertical: 12,
     borderBottomWidth: 1,
     borderBottomColor: "#E0E0E0",
     width: "100%",
     alignItems: "center",
+    backgroundColor: "#F9F9F9",
   },
   yearText: {
     fontSize: 16,
@@ -139,15 +164,16 @@ const styles = StyleSheet.create({
   },
   closeButton: {
     marginTop: 10,
-    backgroundColor: "#283ba6",
-    padding: 10,
-    borderRadius: 5,
+    backgroundColor: "#283BA6",
+    padding: 12,
+    borderRadius: 8,
     width: "100%",
     alignItems: "center",
   },
   closeButtonText: {
     color: "#FFF",
     fontFamily: "JakartaBold",
+    fontSize: 16,
   },
 });
 

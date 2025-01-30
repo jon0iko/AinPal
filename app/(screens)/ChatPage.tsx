@@ -8,6 +8,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   FlatList,
+  ActivityIndicator,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
@@ -23,6 +24,7 @@ interface Message {
 export default function ChatPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputText, setInputText] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
   const router = useRouter();
 
   // Handle sending the message
@@ -32,10 +34,12 @@ export default function ChatPage() {
     setMessages((prev) => [...prev, userMessage]); // Add user message to chat
 
     setInputText(""); // Clear input field
+    setLoading(true); // Show loading animation
 
     const botResponse = await fetchChatResponse(inputText.trim()); // Fetch response
     const botMessage: Message = { type: "bot", content: botResponse };
     setMessages((prev) => [...prev, botMessage]); // Add bot response to chat
+    setLoading(false); // Hide loading animation
   };
 
   return (
@@ -67,6 +71,12 @@ export default function ChatPage() {
         )}
         contentContainerStyle={styles.chatContent}
       />
+
+      {loading && (
+        <View style={styles.loadingContainer}>
+          <ActivityIndicator size="small" color="#003F7D" />
+        </View>
+      )}
 
       {/* Typing Area */}
       <KeyboardAvoidingView
@@ -166,5 +176,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     marginLeft: 10,
+  },
+  loadingContainer: {
+    alignItems: "center",
+    marginVertical: 10,
   },
 });
