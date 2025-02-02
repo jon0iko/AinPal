@@ -2,7 +2,11 @@
 
 ## Project Overview  
 
-The **AinPal** is a mobile application designed to provide legal assistance and raise awareness of various laws for general users. The app helps users understand legal compliance requirements, such as regulations for starting a business, through an AI-powered chatbot and a search interface. The chatbot uses advanced natural language processing (NLP) to retrieve relevant legal sections, making legal information more accessible and understandable.  
+**AinPal** is an Android application designed to provide general legal assistance and awareness to the public.Legal information is often complex, difficult to navigate, and inaccessible to the general public. Many individuals struggle to understand legal requirements, such as compliance for starting a business or resolving legal disputes, due to lack of legal awareness, technical jargon in laws, and the high cost of professional legal consultation. This creates a barrier to justice and legal compliance, particularly for people with limited resources. Moreover, there is a lack of legal awareness among the general public, which inherently contributes to the poor state of the ‘Rule of Law’ in our country.
+
+The motivation behind this app is to democratize legal information, ensuring that individuals can make informed decisions without unnecessary delays or financial burdens
+
+
 
 ## Features  
 
