@@ -10,7 +10,10 @@ export default function Chatbot() {
   return (
     <View style={styles.container}>
       {/* Back Button */}
-      <TouchableOpacity style={styles.backButton} onPress={() => router.replace("/(root)/(tabs)/home")}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => router.replace("/(root)/(tabs)/home")}
+      >
         <Ionicons name="arrow-back" size={24} color="#34495e" />
       </TouchableOpacity>
 
@@ -24,9 +27,10 @@ export default function Chatbot() {
       </View>
 
       {/* Welcome Text */}
-      <Text style={styles.title}>Welcome to LawBot!</Text>
+      <Text style={styles.title}>Welcome PAL!</Text>
       <Text style={styles.subtitle}>
-        Ask me to summarize or explain any law!
+        Confused about which law applies for you? 
+        Need quick insights?{"\n"}
       </Text>
 
       {/* Gradient Start Chatting Button */}

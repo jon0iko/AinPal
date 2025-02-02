@@ -37,9 +37,20 @@ const SearchLaws: React.FC<SearchLawsProps> = ({ search, setSearch }) => {
   ).reverse();
 
   const applyFilter = (year: string) => {
-    setSelectedYear(year);
+    let formattedYear = year;
+
+    // Convert year to Bangla numerals if it's 1986 or later
+    if (parseInt(year, 10) >= 1986) {
+      const banglaDigits = ["০", "১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯"];
+      formattedYear = year
+        .split("")
+        .map((digit) => banglaDigits[parseInt(digit, 10)])
+        .join("");
+    }
+
+    setSelectedYear(formattedYear);
     setFilterVisible(false);
-    setSearch(`${inputValue} ${year}`.trim()); // Update search with year
+    setSearch(`${inputValue} ${formattedYear}`.trim()); // Update search with formatted year
   };
 
   return (

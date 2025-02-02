@@ -53,7 +53,7 @@ export default function ContactUs() {
           style={styles.inputField}
         />
         <TextInput
-          placeholder="Enter your message"
+          placeholder="Any Feedback?"
           value={message}
           onChangeText={setMessage}
           multiline
