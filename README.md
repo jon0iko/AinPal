@@ -38,8 +38,8 @@ You can download the latest version of the AinPal app here:
    git clone <repository-url>
    cd <project-directory>
 
-2. **Install Dependencies**
-   After cloning the repository, install the required dependencies:
+2. **Install Dependencies**  
+   After cloning the repository, install the required dependencies:  
    ```bash
    npm install
 
