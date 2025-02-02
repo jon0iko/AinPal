@@ -43,7 +43,7 @@ You can download the latest version of the AinPal app here:
    ```bash
    npm install
 
-3. **Run the Application**
+3. **Run the Application**  
    Once the dependencies are installed, start the application:  
    ```bash
    npx expo start
