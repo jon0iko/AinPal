@@ -48,8 +48,8 @@ You can download the latest version of the AinPal app here:
    ```bash
    npx expo start
 
-4. **Test the App**
-   Run the app on an Android emulator, iOS simulator, or a physical device:
-   Scan the QR code in Expo Developer Tools using the Expo Go app (available on the Google Play Store or Apple App Store).
-   For Android, you can use the Expo Go app or an emulator.
-   For iOS, run the app on a simulator or a physical device using Expo Go.    
+4. **Test the App**  
+   - Run the app on an **Android emulator**, **iOS simulator**, or a **physical device**:
+     - **Scan the QR code** in **Expo Developer Tools** using the **Expo Go** app (available on the Google Play Store or Apple App Store).
+     - For **Android**, you can use the **Expo Go app** or an emulator.
+     - For **iOS**, run the app on a simulator or a physical device using the **Expo Go** app.
