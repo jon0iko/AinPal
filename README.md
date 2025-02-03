@@ -1,50 +1,55 @@
-# Welcome to your Expo app 👋
+# 📜 AinPal
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Project Overview  
 
-## Get started
+**AinPal** is an Android application designed to provide general legal assistance and awareness to the public. Legal information is often complex, difficult to navigate, and inaccessible to the general public. Many individuals struggle to understand legal requirements, such as compliance for starting a business or resolving legal disputes, due to a lack of legal awareness, technical jargon in laws, and the high cost of professional legal consultation. This creates a barrier to justice and legal compliance, particularly for people with limited resources. Moreover, there is a lack of legal awareness among the general public, which inherently contributes to the poor state of the ‘Rule of Law’ in our country.
 
-1. Install dependencies
+The motivation behind this app is to democratize legal information, ensuring that individuals can make informed decisions without unnecessary delays or financial burdens.
 
+## Features  
+
+- 🔍 **Search Laws** – Users can search for specific laws using keywords or classification filters.  
+- 🤖 **AI-powered Chatbot** – Provides legal guidance by retrieving relevant law sections.  
+- 📜 **Legal Awareness** – Educates users about compliance requirements for various domains.  
+- 📱 **User-Friendly Interface** – Designed for a smooth and intuitive user experience.  
+- 🌐 **Mobile Accessibility** – A fully functional Android application for easy legal assistance.  
+
+## Team Members 👥  
+
+- **Nafiul Alim Adeeb**  
+- **Md. Nuran Nahadi Islam**  
+- **Sharmila Surovi**  
+- **Yuki Bhuiyan**  
+
+## Course Information 🎓  
+
+- **Course Name**: CSE2216: Application Development Lab  
+
+## APK Download 📥  
+
+You can download the latest version of the AinPal app here:  
+🔗 [Download AinPal APK](https://rb.gy/xxpzzu)
+
+## Installation & Setup 🚀  
+
+1. **Clone the Repository**  
+   Clone the project repository to your local machine:  
+   ```bash
+   git clone <repository-url>
+   cd <project-directory>
+
+2. **Install Dependencies**  
+   After cloning the repository, install the required dependencies:  
    ```bash
    npm install
-   ```
 
-2. Start the app
-
+3. **Run the Application**  
+   Once the dependencies are installed, start the application:  
    ```bash
-    npx expo start
-   ```
+   npx expo start
 
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+4. **Test the App**  
+   - Run the app on an **Android emulator**, **iOS simulator**, or a **physical device**:
+     - **Scan the QR code** in **Expo Developer Tools** using the **Expo Go** app (available on the Google Play Store or Apple App Store).
+     - For **Android**, you can use the **Expo Go app** or an emulator.
+     - For **iOS**, run the app on a simulator or a physical device using the **Expo Go** app.
